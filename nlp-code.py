@@ -3,8 +3,7 @@
 import os
 import sys
 import heapq  # We use heap queue as a dictionary sorting structure.
-from pathlib import Path
-
+from heapq import heappop
 
 # Resources
 
@@ -118,13 +117,42 @@ for sub_dir in os.scandir(main_dir):
         # Fetch top 1000 tri-chars
         top_trigrams = heapq.nlargest(1000, in_domain_dict)  # OPTIMIZE: Faster sort?
 
+        # Dictionary that matches tri-grams to vector index
+        tri_indexer = {}
+
+        for index in range(1000):
+            tri_indexer[heappop(top_trigrams)] = index
+
         # TEST: Fetched trigrams
         for top_trigram in top_trigrams: # DEBUG: Doesn't print non-english letters. does it even tell?
             print(top_trigram)
 
+        users = {}  # this user dict contains {user : vector} entries
+
         # Making user feature vectors
+        for country_dir in os.scandir(sub_dir):  # parse country directories (exm: reddit.Albania.txt.tok.clean)
+            for user_dir in os.scandir(country_dir):  # parse user directories (exm: user_name)
+                user_vector = [0] * 1000
+                for file_dir in os.scandir(user_dir):  # parse chunk files (exm: char_ngram_chunk1)
+                    file = open(file_dir, "r", encoding="utf-8")
+                    lines = file.readlines()
+                    for line in lines:  # parse lines within chunk text
+                        if len(line) >= 11:
+                            cur_char = 0
+                            while cur_char < len(line):
+                                # print (country_dir,":",user_dir,":",file_dir)
+                                trigram = line[cur_char + 1] + line[cur_char + 4] + line[cur_char + 7]
+                                if trigram in tri_indexer.keys():
+                                    user_vector[tri_indexer.get(trigram)] += 1  # increment specific user trigram count
+                                cur_char += 11
+
+        # TEST: Initialized vectors correctness
+
+        # At this stage, all users are in the users dict and have their vectors with trigram counters
 
         # Classification
+
+        # Result
 
     elif os.path.dirname(sub_dir) == "non_europe_data":
         pass
