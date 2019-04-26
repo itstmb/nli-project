@@ -4,14 +4,14 @@ Extension: additional features and word embeddings
 
 ## Prerequisites
 
-Python Version 3.7.3+
-Disk Storage: 226 GB (OR UP TO 300GB with non_tokenized_chunks)
+* Python Version 3.7.3+
+* Disk Storage: 226 GB (OR UP TO 300GB with non_tokenized_chunks)
 
 The following Python modules are a **must**:
 
-SciPy (and NumPy) <https://www.scipy.org/install.html>
+* SciPy (and NumPy) <https://www.scipy.org/install.html>
 
-scikit-learn <https://scikit-learn.org/stable/install.html>
+* scikit-learn <https://scikit-learn.org/stable/install.html>
 
 While it is possible to make your own data retrieval program, we highly recommend using the complete database:
 
