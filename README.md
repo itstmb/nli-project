@@ -59,10 +59,6 @@ Custom markdowns:
 
 ## Running the code
 
-Use
-
 ```
 python nlp-code.py /database_directory
 ```
-
-to run the code on the specified database directory.
