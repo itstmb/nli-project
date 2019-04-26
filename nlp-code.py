@@ -8,12 +8,12 @@ from heapq import heappop
 # Resources
 
 # Language
+
 class Language(object):
     def __init__(self, native, family, language_name):
         self.native = native
         self.family = family
         self.language_name = language_name
-
 
 # Trigram Count
 class TriCount(object):
@@ -79,14 +79,13 @@ Language_dict = {
 
 # Generate dictionary from files
 
-base_path = os.path.dirname(os.path.realpath(__file__));
 main_dir = sys.argv[1]  # Files directory
-i = 0
+# DEBUG i = 0
 
 for sub_dir in os.scandir(main_dir):
-    print(sub_dir)
+    print(sub_dir)  # DEBUG: tracks progress
     if sub_dir.name == "europe_data":  # europe_data directory
-        in_domain_dict = {}
+        in_domain_dict = {}  # saves tri-chars and their count in the entire database
 
         """ 
         Parse all files and set in_domain_dict to contain all trigram chars
@@ -111,25 +110,25 @@ for sub_dir in os.scandir(main_dir):
                                     in_domain_dict[trigram] += 1
                                 cur_char += 11
                 # DEBUG: print("[", i, "]", " processing user ", user_dir)
-                i += 1
+                # DEBUG: i += 1
             # DEBUG: print("processing country ", country_dir)
+        # READY: in_domain_dict{} contains all tri-chars and their counts
 
-        # Fetch top 1000 tri-chars
-        top_trigrams = heapq.nlargest(1000, in_domain_dict)  # OPTIMIZE: Faster sort?
+        top_trichars = heapq.nlargest(1000, in_domain_dict)  # fetch top 1000 trichars OPTIMIZE: Faster sort?
 
-        # Dictionary that matches tri-grams to vector index
-        tri_indexer = {}
+        trichars_mapper = {}  # saves mapping between trichars and vector index
 
         for index in range(1000):
-            tri_indexer[heappop(top_trigrams)] = index
-
+            trichars_mapper[heappop(top_trichars)] = index
+        # READY: trichars_mapper{} maps the 1000 most common tri-chars in the database to index numbers
         # TEST: Fetched trigrams
-        for top_trigram in top_trigrams: # DEBUG: Doesn't print non-english letters. does it even tell?
+
+        for top_trigram in top_trichars:  # DEBUG: Doesn't print non-english letters. does it even tell?
             print(top_trigram)
 
         users = {}  # this user dict contains {user : vector} entries
 
-        # Making user feature vectors
+        # MOTIVATION: Building a feature vector of the 1000 most common tri-chars for each user
         for country_dir in os.scandir(sub_dir):  # parse country directories (exm: reddit.Albania.txt.tok.clean)
             for user_dir in os.scandir(country_dir):  # parse user directories (exm: user_name)
                 user_vector = [0] * 1000
@@ -142,17 +141,16 @@ for sub_dir in os.scandir(main_dir):
                             while cur_char < len(line):
                                 # print (country_dir,":",user_dir,":",file_dir)
                                 trigram = line[cur_char + 1] + line[cur_char + 4] + line[cur_char + 7]
-                                if trigram in tri_indexer.keys():
-                                    user_vector[tri_indexer.get(trigram)] += 1  # increment specific user trigram count
+                                if trigram in trichars_mapper.keys():
+                                    user_vector[trichars_mapper.get(trigram)] += 1  # increment user trigram count
                                 cur_char += 11
-
+                users[user_dir] = user_vector # insert {user_name:user_vector} to the users dict
         # TEST: Initialized vectors correctness
+        # READY: users{} contains all users and their 1000 most common tri-chars vector
 
-        # At this stage, all users are in the users dict and have their vectors with trigram counters
+        # MOTIVATION: Classification
 
-        # Classification
-
-        # Result
+        # MOTIVATION: Result analysis
 
     elif os.path.dirname(sub_dir) == "non_europe_data":
         pass
