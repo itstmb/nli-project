@@ -72,8 +72,8 @@ def vector_generator(database_dir):
                 # DEBUG: print("processing country ", country_dir)
             # READY: in_domain_dict{} contains all tri-chars and their counts
 
-            print(datetime.datetime.now()-globals.start_time, ": in_domain_dict size: ", len(in_domain_dict))
-            print(datetime.datetime.now()-globals.start_time, ": in_domain_dict initialized, starting fetch using heapq")
+            print("[",datetime.datetime.now()-globals.start_time,"] in_domain_dict size: ", len(in_domain_dict))
+            print("[",datetime.datetime.now()-globals.start_time,"] in_domain_dict initialized, starting fetch using heapq")
 
             top_trichars = heapq.nlargest(1000, in_domain_dict, key=in_domain_dict.get)  # fetch top 1000 trichars
             in_domain_dict = None  # Free memory
@@ -85,7 +85,8 @@ def vector_generator(database_dir):
             f.close()
             # READY: top_trichars.txt contains top 1000 trichars
 
-            print(datetime.datetime.now()-globals.start_time, ": fetched 1000 top trichars, starting user vectors init")
+            print("[",datetime.datetime.now()-globals.start_time,
+                  "] fetched 1000 top trichars, starting user vectors init")
 
             # DEBUG: for top_trigram in top_trichars:  # DEBUG: Doesn't print non-english letters. does it even tell?
             # DEBUG:    print(top_trigram)
@@ -127,7 +128,7 @@ def vector_generator(database_dir):
             # READY: users[] contains a 1000 most common tri-chars vector for each user
             # READY: countries_of_users[] contains the country name for each user (index-fit with users[])
 
-            print(datetime.datetime.now()-globals.start_time, ": user vectors initialized, starting binary classification")
+            print("[",datetime.datetime.now()-globals.start_time,"] user vectors initialized, starting binary classification")
 
             # MOTIVATION: Binary Classification
                 # MOTIVATION: Convert countries_of_users to Binary (0- non-native speaker, 1- native speaker)
@@ -140,16 +141,16 @@ def vector_generator(database_dir):
                     binary_countries_vector.append(0)
 
             # DEBUG: print(binary_countries_vector)
-            print("Users: ",len(users))
-            print("Countries:" ,len(binary_countries_vector))
+            # DEBUG: print("Users: ",len(users))
+            # DEBUG: print("Countries:" ,len(binary_countries_vector))
 
             # DEBUG: print to files
-            with open('vectors/users.txt', 'w') as f:
+            with open('classifiers/char_ngrams/vectors/users.txt', 'w') as f:
                 for user in users:
                     f.write("%s\n" % user)
             f.close()
 
-            with open('vectors/countries.txt', 'w') as f:
+            with open('classifiers/char_ngrams/vectors/countries.txt', 'w') as f:
                 for country in binary_countries_vector:
                     f.write("%s\n" % country)
             f.close()
