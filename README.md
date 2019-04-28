@@ -21,6 +21,8 @@ While it is possible to make your own data retrieval program, we highly recommen
 
 In order to unzip the database, It is required to have 7zip: <https://www.7-zip.org/download.html>
 
+**Please note**: You won't be able to generate your own vectors without the database, but you are still able to use the vectors we've made.
+
 It is highly recommended to use PyCharm to view/edit the code. We have made a custom configuration file that highlights the important comments in different colors and makes it much easier to follow the algorithm process.
 
 --------------------------------------------------------------------------------
@@ -60,6 +62,15 @@ Custom markdowns:
 
 ## Running the code
 
+There are multiple ways to run the project:
+
+* Create the vectors yourself using the database / use the ready vectors
+available on `./data`. This option saves alot of time if you intend to run the code on the database as is.
+in order to create your own feature vectors, put in the database directory to generate vectors from.
 ```
-python nlp-code.py /database_directory
+python main.py 
+```
+or
+```
+python main.py /database_directory
 ```
