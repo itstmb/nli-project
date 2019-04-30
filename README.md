@@ -75,7 +75,7 @@ To apply the tags(color patterns) configurations for better readability:
 4. Save
 5. Restart Pycharm to apply those settings
 
-*Option 2 (REPLACE):
+* Option 2 (REPLACE):
 Another way to apply those setting is to replace your `editor.xml` file with the one in the `project/settings` directory. Note that doing so will erase your other custom Editor configurations if you had any.
 
 You should now have the custom color schemes (highlighting) for the project:
