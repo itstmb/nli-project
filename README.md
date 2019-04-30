@@ -37,7 +37,7 @@ The database is very compressed, use 7zip in order to unzip the initial files, a
 
 To apply the tags(color patterns) configurations for better readability:
 
-1. Open PyCharm config options directory (usually `C:\Users\YOUR_USERNAME\.PyCharmCE2018.3\config\options`)
+* 1. Open PyCharm config options directory (usually `C:\Users\YOUR_USERNAME\.PyCharmCE2018.3\config\options`)
 2. Use a text editor to open the `editor.xml` file
 3. add the following pattern tags under the `TodoConfiguration` component (below the \bfixme\b.* pattern):
 
@@ -74,7 +74,7 @@ To apply the tags(color patterns) configurations for better readability:
 4. Save
 5. Restart Pycharm to apply those settings
 
-Another way to apply those setting is to replace your `editor.xml` file with the one in the `project/settings` directory. Note that doing so will erase your other custom Editor configurations if you had any.
+* Another way to apply those setting is to replace your `editor.xml` file with the one in the `project/settings` directory. Note that doing so will erase your other custom Editor configurations if you had any.
 
 You should now have the custom color schemes (highlighting) for the project:
 
