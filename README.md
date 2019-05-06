@@ -21,7 +21,7 @@ While it is possible to make your own data retrieval program, we highly recommen
 
 In order to unzip the database, It is required to have 7zip: <https://www.7-zip.org/download.html>
 
-**Please note**: You won't be able to generate your own vectors without the database, but you are still able to use the vectors we've made.
+**Please note**: You won't be able to generate your own vectors without the database, but you are still able to use the vectors we've made. However some of the vector txt files are too large to share on github, thus you will be required to generate them yourself in order to classify using those.
 
 It is highly recommended to use PyCharm to view/edit the code. We have made a custom configuration file that highlights the important comments in different colors and makes it much easier to follow the algorithm process.
 
