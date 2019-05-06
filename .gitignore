@@ -5,3 +5,4 @@ classifiers/char_ngrams/vectors/out_users.txt
 *.pyc
 classifiers/char_ngrams/__pycache__/vector_handler.cpython-37.pyc
 classifiers/char_ngrams/__pycache__/classifier.cpython-37.pyc
+*.pyc
