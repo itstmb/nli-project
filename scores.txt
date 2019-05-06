@@ -1,0 +1,23 @@
+Scores:
+
+-Trichars
+	-Binary
+		-In domain: 0.845
+		-Out of domain: 0.656
+	-Family
+		-In domain:
+		-Out of domain:
+	-Language
+		-In domain:
+		-Out of domain:
+
+-POS Tags
+	-Binary
+		-In domain:
+		-Out of domain:
+	-Family
+		-In domain:
+		-Out of domain:
+	-Language
+		-In domain:
+		-Out of domain:

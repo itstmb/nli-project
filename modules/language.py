@@ -57,4 +57,25 @@ LanguageDict = {
         'UK': Language(True, 'NativeEnglish', 'English'),
         'Ukraine': Language(False, 'BaltoSlavic', 'Ukraine'),
         'US': Language(True, 'Turkic', 'English'),
-        'Vietnam': Language(False, 'NonEuropean', 'Vietnam')}
+        'Vietnam': Language(False, 'NonEuropean', 'Vietnam')
+}
+
+'''Germanic, BaltoSlavic, Romance, NativeEnglish ,Albanian, Armenian, NonEuropean,
+                       Finno-Permic, AfroAsiatic, Turkic, Hellenic, Finnic, Karto-Zan'''
+
+# Maps language families to numbers for family classification
+FamilyToNum = {
+        'Germanic': 0,
+        'BaltoSlavic': 1,
+        'Romance': 2,
+        'NativeEnglish': 3,
+        'Albanian': 4,
+        'Armenian': 5,
+        'NonEuropean': 6,
+        'Finno-Permic': 7,
+        'AfroAsiatic': 8,
+        'Turkic': 9,
+        'Hellenic': 10,
+        'Finnic': 11,
+        'Karto-Zan': 12
+}
