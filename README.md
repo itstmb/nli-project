@@ -5,7 +5,7 @@ Extension: additional features and word embeddings
 ## Prerequisites
 
 * Python Version 3.7.3+
-* Disk Storage: 226 GB (OR UP TO 300GB with non_tokenized_chunks)
+* Disk Storage: 226 GB (OR UP TO 300GB with non_tokenized_chunks) (OR 1GB with the ready vector files)
 
 The following Python modules are a **must**:
 
