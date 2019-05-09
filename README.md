@@ -108,3 +108,10 @@ or
 ```
 python main.py /database_directory
 ```
+
+--------------------------------------------------------------------------------
+
+## Credits
+Based on the paper "Native Language Identification with User Generated Content" (November 2018)
+Gili Goldin, Ella Rabinovich, Shuly Wintner
+The paper is available online: https://aclweb.org/anthology/papers/D/D18/D18-1395/
