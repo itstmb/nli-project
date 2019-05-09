@@ -17,19 +17,19 @@ While it is possible to make your own data retrieval program, we highly recommen
 
 <https://drive.google.com/drive/folders/125RAHvCIHBR-jAUnIhqzWhdxh0mQ_fcv>
 
-(non_tokenized_chunks contains raw text and won't be used in our project)
+(non_tokenized_chunks contains raw text and which is unnecessary in our project)
 
-In order to unzip the database, It is required to have 7zip: <https://www.7-zip.org/download.html>
+To unzip the database, you are required to have 7zip: <https://www.7-zip.org/download.html>
 
-**Please note**: You won't be able to generate your own vectors without the database, but you are still able to use the vectors we've made. However some of the vector txt files are too large to share on github, thus you will be required to generate them yourself in order to classify using those.
+**Please note**: You won't be able to generate the vectors without the database, but you are still able to use the vectors we have made. However some of the vector .txt files are too large to share on GitHub, thus you will be required to generate them yourself to classify using those features.
 
-It is highly recommended to use PyCharm to view/edit the code. We have made a custom configuration file that highlights the important comments in different colors and makes it much easier to follow the algorithm process.
+It is highly recommended to use PyCharm to view/edit the code. We have made a custom configuration file that highlights the essential comments in different colors and makes it much easier to follow the algorithm process.
 
 --------------------------------------------------------------------------------
 
 ## Installing
 
-The database is very compressed, use 7zip in order to unzip the initial files, and then to unzip the outcome files again.
+The database is very compressed, use 7zip to unzip the original files, and then to unzip the outcome files again.
 
 --------------------------------------------------------------------------------
 
@@ -43,33 +43,33 @@ To apply the tags(color patterns) configurations for better readability:
 3. add the following pattern tags under the `TodoConfiguration` component (below the \bfixme\b.* pattern):
 
 ```
-	<pattern useCustomColors="true" case-sensitive="true" pattern="\bOPTIMIZE\b.*">
-	  <option name="FOREGROUND" value="6e05f1" />
-	  <option name="FONT_TYPE" value="3" />
-	  <option name="ERROR_STRIPE_COLOR" value="7c27d7" />
-	</pattern>
-	<pattern useCustomColors="true" case-sensitive="true" pattern="\bDEBUG\b.*">
-	  <option name="FOREGROUND" value="cec27b" />
-	  <option name="FONT_TYPE" value="3" />
-	  <option name="ERROR_STRIPE_COLOR" value="e3e081" />
-	</pattern>
-	<pattern useCustomColors="true" case-sensitive="true" pattern="\bTEST\b.*">
-	  <option name="FOREGROUND" value="bf40" />
-	  <option name="BACKGROUND" value="ffb200" />
-	  <option name="FONT_TYPE" value="3" />
-	  <option name="ERROR_STRIPE_COLOR" value="61e367" />
-	</pattern>
-	<pattern useCustomColors="true" case-sensitive="true" pattern="\bREADY\b.*">
-	  <option name="FOREGROUND" value="fafffb" />
-	  <option name="BACKGROUND" value="b30f" />
-	  <option name="FONT_TYPE" value="3" />
-	  <option name="EFFECT_TYPE" value="5" />
-	</pattern>
-	<pattern useCustomColors="true" case-sensitive="true" pattern="\bMOTIVATION\b.*">
-	  <option name="FOREGROUND" value="fcfff9" />
-	  <option name="BACKGROUND" value="bf89" />
-	  <option name="FONT_TYPE" value="3" />
-	</pattern>
+    <pattern useCustomColors="true" case-sensitive="true" pattern="\bOPTIMIZE\b.*">
+      <option name="FOREGROUND" value="6e05f1" />
+      <option name="FONT_TYPE" value="3" />
+      <option name="ERROR_STRIPE_COLOR" value="7c27d7" />
+    </pattern>
+    <pattern useCustomColors="true" case-sensitive="true" pattern="\bDEBUG\b.*">
+      <option name="FOREGROUND" value="cec27b" />
+      <option name="FONT_TYPE" value="3" />
+      <option name="ERROR_STRIPE_COLOR" value="e3e081" />
+    </pattern>
+    <pattern useCustomColors="true" case-sensitive="true" pattern="\bTEST\b.*">
+      <option name="FOREGROUND" value="bf40" />
+      <option name="BACKGROUND" value="ffb200" />
+      <option name="FONT_TYPE" value="3" />
+      <option name="ERROR_STRIPE_COLOR" value="61e367" />
+    </pattern>
+    <pattern useCustomColors="true" case-sensitive="true" pattern="\bREADY\b.*">
+      <option name="FOREGROUND" value="fafffb" />
+      <option name="BACKGROUND" value="b30f" />
+      <option name="FONT_TYPE" value="3" />
+      <option name="EFFECT_TYPE" value="5" />
+    </pattern>
+    <pattern useCustomColors="true" case-sensitive="true" pattern="\bMOTIVATION\b.*">
+      <option name="FOREGROUND" value="fcfff9" />
+      <option name="BACKGROUND" value="bf89" />
+      <option name="FONT_TYPE" value="3" />
+    </pattern>
 ```
 
 4. Save
@@ -84,13 +84,13 @@ Custom markdowns:
 
 > OPTIMIZE - Parts of the code that we think could be optimized somehow (space/time).
 
-> DEBUG - Parts of the code that are used in the debugging process.
+> DEBUG - Parts of the code that we use in the debugging process.
 
 > TEST - Parts of the code that still require some testing to make sure they do what we want them to.
 
-> READY - This indicates that what is written after the tag should be working and ready to work with (helps with algorithm readability).
+> READY - This indicates that what is mentioned after the tag should be working and ready to work with (helps with algorithm readability).
 
-> MOTIVATION - Something that is yet to be implemented.
+> MOTIVATION - Something we intend to implement in the future.
 
 --------------------------------------------------------------------------------
 
@@ -99,8 +99,8 @@ Custom markdowns:
 There are multiple ways to run the project:
 
 * Create the vectors yourself using the database / use the ready vectors
-available on `./data`. This option saves alot of time if you intend to run the code on the database as is.
-in order to create your own feature vectors, put in the database directory to generate vectors from.
+available on `./data`. This option saves a lot of time if you intend to run the code on the database as is.
+To create the feature vectors, put in the database directory by the end of the command.
 ```
 python main.py 
 ```
