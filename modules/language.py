@@ -68,3 +68,47 @@ FamilyToNum = {
     'Latin': 3,
     'Other': 4
 }
+
+# Maps languages to numbers for language classification
+LanguageToNum = {
+    'Albania': 0,
+    'Armenia': 1,
+    'English': 2,
+    'German': 3,
+    'Bosnia': 4,
+    'Bulgaria': 5,
+    'China': 6,
+    'Croatia': 7,
+    'Greece': 8,
+    'Czech': 9,
+    'Denmark': 10,
+    'Estonia': 11,
+    'Finland': 12,
+    'France': 13,
+    'Georgia': 14,
+    'Hungary': 15,
+    'Iceland': 16,
+    'India': 17,
+    'Israel': 18,
+    'Italy': 19,
+    'Latvia': 20,
+    'Lithuania': 21,
+    'Macedonia': 22,
+    'Malta': 23,
+    'Spanish': 24,
+    'Romania': 25,
+    'Montenegro': 26,
+    'Netherlands': 27,
+    'Norway': 28,
+    'Poland': 29,
+    'Portugal': 30,
+    'Russia': 31,
+    'Serbia': 32,
+    'Slovakia': 33,
+    'Slovenia': 34,
+    'Sweden': 35,
+    'Turkey': 36,
+    'Ukraine': 37,
+    'Vietnam': 38
+
+}
