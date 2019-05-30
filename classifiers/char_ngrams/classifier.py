@@ -34,14 +34,13 @@ def char_ngrams_classifier(generate_vectors, in_out_domain, vector_type, databas
     else:  # use the ready vectors from the vectors directory
         try:
             if in_out_domain == "in":
-                users_vector, \
-                countries_vector = \
-                    vector_handler.vector_loader(in_out_domain, vector_type)
+                users_vector, countries_vector = \
+                    vector_handler.vector_loader("in", vector_type)
 
             elif in_out_domain == "out":
                 users_vector, countries_vector, \
                 out_users_vector, out_binary_countries_vector \
-                    = vector_handler.vector_loader(in_out_domain, vector_type)
+                    = vector_handler.vector_loader("out", vector_type)
         except NameError:
             print('Cannot load vectors from classifier')
             return
@@ -59,7 +58,7 @@ def char_ngrams_classifier(generate_vectors, in_out_domain, vector_type, databas
 
 # MOTIVATION: Language Classification
 
-def logistic_regression_classifier_in(users_vector, countries_vector, vector_type, iterations_limit = 10000, testing_users_vector = None, testing_countries_vector = None):
+def logistic_regression_classifier_in(users_vector, countries_vector, vector_type, iterations_limit = 10000):
     """
     :param users_vector: vector of vectors for each user, containing the 1000 most frequent trichars
     :param binary_countries_vector: vector of integers, containing a matching binary/family/language for each user
@@ -69,7 +68,7 @@ def logistic_regression_classifier_in(users_vector, countries_vector, vector_typ
     if iterations_limit is None:
         iterations_limit = 2000
     if vector_type == "binary":
-        clf = LogisticRegression(solver='lbfgs', max_iter=iterations_limit, n_jobs=-1)
+        clf = LogisticRegression(solver='liblinear', max_iter=iterations_limit, n_jobs=-1)
     elif vector_type in {"family","language"}:
         clf = LogisticRegression(solver='lbfgs', max_iter=iterations_limit, multi_class='multinomial', n_jobs=-1)
     print("[",datetime.datetime.now()-globals.start_time, "] (in) starting cross validation process")
@@ -79,11 +78,12 @@ def logistic_regression_classifier_in(users_vector, countries_vector, vector_typ
     classifier_scores = cross_val_score(clf, users_vector, countries_vector, cv=10)
     return np.average(classifier_scores)
 
+
 def logistic_regression_classifier_out(training_users_vector, training_countries_vector,
                                        testing_users_vector, testing_countries_vector,
-                                       vector_type, iterations_limit = 20000):
+                                       iterations_limit = 20000):
     if iterations_limit is None:
         iterations_limit = 2000
-    clf = LogisticRegression(solver='lbfgs', max_iter=iterations_limit, n_jobs=-1).fit(training_users_vector, training_countries_vector)
+    clf = LogisticRegression(solver='auto', max_iter=iterations_limit, n_jobs=-1).fit(training_users_vector, training_countries_vector)
     print("[",datetime.datetime.now()-globals.start_time, "] starting prediction process")
     return clf.score(testing_users_vector, testing_countries_vector)

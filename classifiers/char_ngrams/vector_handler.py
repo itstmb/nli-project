@@ -34,11 +34,18 @@ def vector_loader(in_out_domain, vector_type):
 
     elif in_out_domain == "out":
         print(datetime.datetime.now() - globals.start_time, ": loading " + vector_type + " out_users vector from file")
-        try:
-            out_users = [literal_eval(line) for line in open("classifiers/char_ngrams/vectors/out_users.txt", 'r')]
-        except IOError:
-            print("Error: File does not appear to exist.")
-            return 0
+        if vector_type != 'language':
+            try:
+                out_users = [literal_eval(line) for line in open("classifiers/char_ngrams/vectors/out_users.txt", 'r')]
+            except IOError:
+                print("Error: File does not appear to exist.")
+                return 0
+        else:
+            try:
+                out_users = [literal_eval(line) for line in open("classifiers/char_ngrams/vectors/out_users_language.txt", 'r')]
+            except IOError:
+                print("Error: File does not appear to exist.")
+                return 0
 
         print(datetime.datetime.now() - globals.start_time, ": loading " + vector_type + " out_countries vector from file")
         with open('classifiers/char_ngrams/vectors/out_countries_' + vector_type + '.txt') as f:
@@ -91,22 +98,28 @@ def trichars_vector_generator(database_dir, in_out_domain, vector_type, load_tri
                                                                      "starting user vectors init")
             trichars_mapper = generate_mapping(top_trichars)
             countries_of_users, users = generate_user_vectors(sub_dir, trichars_mapper)
+            write_vectors_to_files("in",countries_of_users, users, vector_type)
             out_countries_vector = generate_countries_vector(countries_of_users, vector_type)
-            write_vectors_to_files(in_out_domain, out_countries_vector, users, vector_type)
+            write_vectors_to_files("out", out_countries_vector, users, vector_type)
             return users, out_countries_vector
 
 
 
 def write_vectors_to_files(in_out_domain, type_countries_vector, users, vector_type):
+    if type_countries_vector != "language":
         with open('classifiers/char_ngrams/vectors/' + in_out_domain + '_users.txt', 'w') as f:
             for user in users:
                 f.write("%s\n" % user)
         f.close()
-
-        with open('classifiers/char_ngrams/vectors/' + in_out_domain + '_countries_' + vector_type + '.txt', 'w') as f:
-            for country in type_countries_vector:
-                f.write("%s\n" % country)
+    else:
+        with open('classifiers/char_ngrams/vectors/' + in_out_domain + '_users_language.txt', 'w') as f:
+            for user in users:
+                f.write("%s\n" % user)
         f.close()
+    with open('classifiers/char_ngrams/vectors/' + in_out_domain + '_countries_' + vector_type + '.txt', 'w') as f:
+        for country in type_countries_vector:
+            f.write("%s\n" % country)
+    f.close()
 
 def generate_countries_vector(countries_of_users, vector_type):
     type_countries_vector = []
