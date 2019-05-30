@@ -77,7 +77,7 @@ LanguageToNum = {
     'German': 3,
     'Bosnia': 4,
     'Bulgaria': 5,
-    'China': 6,
+    # 'China': 6,
     'Croatia': 7,
     'Greece': 8,
     'Czech': 9,
@@ -97,7 +97,7 @@ LanguageToNum = {
     'Malta': 23,
     'Spanish': 24,
     'Romania': 25,
-    'Montenegro': 26,
+    # 'Montenegro': 26,
     'Netherlands': 27,
     'Norway': 28,
     'Poland': 29,
@@ -108,7 +108,7 @@ LanguageToNum = {
     'Slovenia': 34,
     'Sweden': 35,
     'Turkey': 36,
-    'Ukraine': 37,
-    'Vietnam': 38
+    'Ukraine': 37
+    # 'Vietnam': 38
 
 }
