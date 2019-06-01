@@ -6,3 +6,11 @@ classifiers/char_ngrams/vectors/out_users.txt
 classifiers/char_ngrams/__pycache__/vector_handler.cpython-37.pyc
 classifiers/char_ngrams/__pycache__/classifier.cpython-37.pyc
 *.pyc
+*.xml
+*.xml
+.idea/misc.xml
+.idea/redo_nli.iml
+.idea/nli-project.iml
+*.npy
+venv/
+vectors_handling/vectors/trichar/users_out.txt
