@@ -45,6 +45,13 @@ If you don't have any file that the algorithm requires in order to provide the v
 python run.py
 ```
 
+Parameters:
+Feature - The feature to use in the classification process.
+Type - The type of classification (binary/language families/languages)
+Domain - In domain trains and tests the classifier on the same data, out domain uses different data to test the classifier.
+Threads - How many threads should be allocated for the classification process, depends on your hardware. -1 means utilize all threads.
+Iterations - The limit of iterations for the classifier, a higher value will give more precise results.
+
 --------------------------------------------------------------------------------
 
 ## Credits
