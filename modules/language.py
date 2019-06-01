@@ -1,6 +1,5 @@
 """
 Language families: Germanic, BaltoSlavic, NativeEnglish ,Other, Latin
-
 """
 
 class Language(object):

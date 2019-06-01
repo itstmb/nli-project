@@ -1,6 +1,6 @@
-from logger import log
-import interpreter as i
-import util
+from utilities.logger import log
+import utilities.interpreter as i
+import utilities.util as util
 from classifier.classifier import classify
 from vectors_handling.vector_provider import provide_vectors
 
@@ -25,4 +25,4 @@ if __name__ == '__main__':
     else:
         result = classify(users, countries)
 
-    util.write_to_file(result)
+    util.write_scores(result)

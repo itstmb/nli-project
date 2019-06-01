@@ -1,5 +1,5 @@
-from logger import log
-import interpreter as i
+from utilities.logger import log
+import utilities.interpreter as i
 import numpy as np
 
 from sklearn.linear_model import LogisticRegression

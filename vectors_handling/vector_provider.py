@@ -1,8 +1,8 @@
-from logger import log
+from utilities.logger import log
 from pathlib import Path
 
-import interpreter as i
-import util
+import utilities.interpreter as i
+import utilities.util as util
 import vectors_handling.uvg as uvg
 import vectors_handling.cvg as cvg
 

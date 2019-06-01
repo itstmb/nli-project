@@ -4,11 +4,11 @@ import heapq
 from heapq import heappop
 
 from pathlib import Path
-from logger import log
+from utilities.logger import log
 
 
-import interpreter as i
-import util
+import utilities.interpreter as i
+import utilities.util as util
 
 
 def generate(saving_path):

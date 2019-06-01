@@ -1,4 +1,4 @@
-import util
+import utilities.util as util
 
 possible_inputs = {
     0: ['trichar','pos'],

@@ -1,5 +1,4 @@
-import util
-
+import utilities.util as util
 
 def log(message):
 

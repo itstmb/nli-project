@@ -1,8 +1,8 @@
 import os
 
-from logger import log
-import interpreter as i
-import util
+from utilities.logger import log
+import utilities.interpreter as i
+import utilities.util as util
 
 
 # generate country vector from database
