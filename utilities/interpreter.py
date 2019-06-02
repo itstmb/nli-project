@@ -33,4 +33,4 @@ def get_params():
 
 def get_database():
     global database
-    database = util.load_countries('database_dir.txt')[0] + util.FeatureToDirectory[feature]
+    database = util.load_countries('utilities/database_dir.txt')[0] + util.FeatureToDirectory[feature]
