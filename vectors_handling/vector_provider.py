@@ -1,6 +1,9 @@
+from collections import Counter
+
 from utilities.logger import log
 from pathlib import Path
 
+import random
 import utilities.interpreter as i
 import utilities.util as util
 import vectors_handling.uvg as uvg
@@ -10,7 +13,30 @@ import vectors_handling.cvg as cvg
 def provide_vectors():
     user_vector = provide_user_vector()
     country_vector = provide_country_vector()
+    user_vector, country_vector = downsampler(user_vector, country_vector)
     return user_vector, country_vector
+
+
+def downsampler(user_vector, country_vector):
+    log('Starting downsampling process')
+    classes_size = Counter(country_vector)
+    ds_size = min(classes_size, key=classes_size.get)
+
+    user_vector, country_vector = util.shuffle_vectors(user_vector, country_vector)
+
+    new_users = []
+    new_countries = []
+    class_counter = dict.fromkeys(Counter.keys(),0)  # Initialize all classes counters to 0
+
+    for user,country in zip(user_vector, country_vector):
+        if class_counter[country] < ds_size:
+            class_counter[country] += 1
+            new_users.append(user)
+            new_countries.append(country)
+
+    return new_users, new_countries
+
+
 
 
 def provide_user_vector():
