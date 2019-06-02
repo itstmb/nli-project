@@ -1,6 +1,7 @@
 import os
 import errno
 import datetime
+import random
 
 import utilities.interpreter as i
 
@@ -125,6 +126,14 @@ FeatureToDirectory = {
 
 def get_time():
     return datetime.datetime.now().strftime("%X")
+
+
+# Takes 2 vectors and shuffles while keeping them in the same {a,b} fitting.
+def shuffle_vectors(vector_a, vector_b):
+    combined_vector = list(zip(vector_a,vector_b))
+    random.shuffle(combined_vector)
+    vector_a, vector_b = zip(*combined_vector)
+    return vector_a, vector_b
 
 
 def exists(path):
