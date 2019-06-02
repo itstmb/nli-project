@@ -7,7 +7,7 @@ Scores:
 	-Family (5 classes)
 		-In domain: 0.780
 		-Out of domain: 0.634
-	-Language (39 classes)
+	-Language (36 classes)
 		-In domain:  0.545
 		-Out of domain: 0.274
 
