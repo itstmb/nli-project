@@ -1,10 +1,10 @@
 import utilities.util as util
 
 possible_inputs = {
-    0: ['trichar','pos'],
-    1: ['binary','family','language'],
-    2: ['in','out'],
-    3: [x for x in range(-1,17)]
+    0: ['trichar', 'pos'],
+    1: ['binary','family', 'language'],
+    2: ['in', 'out'],
+    3: [x for x in range(-1, 17)]
 }
 
 '''

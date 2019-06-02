@@ -36,8 +36,6 @@ def downsampler(user_vector, country_vector):
     return new_users, new_countries
 
 
-
-
 def provide_user_vector():
     user_file_path = Path("vectors_handling/vectors/" + i.feature + "/users_" + i.domain + ".txt")
 
@@ -83,4 +81,3 @@ def class_converter(country_names):
             country_vector.append(util.LanguageToNum[util.LanguageDict.get(country).name])
 
     return country_vector
-
