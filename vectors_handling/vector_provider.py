@@ -3,7 +3,7 @@ from collections import Counter
 from utilities.logger import log
 from pathlib import Path
 
-import utilities.interpreter as i
+import utilities.interpreter as setup
 import utilities.util as util
 import vectors_handling.uvg as uvg
 import vectors_handling.cvg as cvg
@@ -19,7 +19,6 @@ def provide_vectors():
 def downsampler(user_vector, country_vector):
     log('Starting downsampling process')
     classes_sizes = Counter(country_vector)
-    print('class_sizes=', classes_sizes)
     ds_size = min(classes_sizes.values())
 
     user_vector, country_vector = util.shuffle_vectors(user_vector, country_vector)
@@ -38,11 +37,17 @@ def downsampler(user_vector, country_vector):
 
 
 def provide_user_vector():
-    user_file_path = Path("vectors_handling/vectors/" + i.feature + "/users_" + i.domain + ".txt")
+    user_file_path = Path("vectors_handling/vectors/" + setup.feature + "/users_" + setup.domain + ".txt")
 
     if not util.exists(user_file_path): # can't find the file in memory
-        log('Cannot find ' + i.feature + ' ' + i.domain + ' user vectors file') # redundant
-        uvg.provide_trichars_map()
+        log('Cannot find ' + setup.feature + ' ' + setup.domain + ' user vectors file') # redundant
+
+        if setup.feature == 'trichar':
+            uvg.provide_trichars_map()
+        elif setup.feature == 'pos':
+            uvg.provide_tripos_map()
+
+
         uvg.generate(user_file_path)
 
     log('Loading user vectors from file')
@@ -51,10 +56,10 @@ def provide_user_vector():
 
 
 def provide_country_vector():
-    country_file_path = Path("vectors_handling/vectors/" + i.feature + "/countries_" + i.domain + ".txt")
+    country_file_path = Path("vectors_handling/vectors/" + setup.feature + "/countries_" + setup.domain + ".txt")
 
     if not util.exists(country_file_path):  # can't find the file in memory
-        log('Cannot find ' + i.feature + ' ' + i.domain + ' countries vectors file') # redundant
+        log('Cannot find ' + setup.feature + ' ' + setup.domain + ' countries vectors file') # redundant
         cvg.generate(country_file_path)
 
     log('Loading country vectors from file')
@@ -66,18 +71,18 @@ def provide_country_vector():
 def class_converter(country_names):
     country_vector = []
 
-    if i.type == 'binary':
+    if setup.type == 'binary':
         for country in country_names:
             if util.LanguageDict.get(country).native:
                 country_vector.append(1)
             else:
                 country_vector.append(0)
 
-    elif i.type == 'family':
+    elif setup.type == 'family':
         for country in country_names:
             country_vector.append(util.FamilyToNum[util.LanguageDict.get(country).family])
 
-    elif i.type == 'language':
+    elif setup.type == 'language':
         for country in country_names:
             country_vector.append(util.LanguageToNum[util.LanguageDict.get(country).name])
 

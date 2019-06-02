@@ -1,18 +1,18 @@
 import os
 
 from utilities.logger import log
-import utilities.interpreter as i
+import utilities.interpreter as setup
 import utilities.util as util
 
 
 # generate country vector from database
 def generate(saving_path):
-    log('Generating <' + i.feature + ',' + i.domain + '> country vector')
+    log('Generating <' + setup.feature + ',' + setup.domain + '> country vector')
 
-    for domain_dir in os.scandir(i.database):
-        if domain_dir.name == 'europe_data' and i.domain == 'in':
+    for domain_dir in os.scandir(setup.database):
+        if domain_dir.name == 'europe_data' and setup.domain == 'in':
             countries = process_dir(domain_dir)
-        elif domain_dir.name == 'non_europe_data' and i.domain == 'out':
+        elif domain_dir.name == 'non_europe_data' and setup.domain == 'out':
             countries = process_dir(domain_dir)
 
     util.save_file(saving_path, countries)

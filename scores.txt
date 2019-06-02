@@ -12,12 +12,12 @@ Scores:
 		-Out of domain: 0.274
 
 -POS Tags
-	-Binary
-		-In domain: 0.789 (old)
+	-Binary (2 classes)
+		-In domain: 0.736
 		-Out of domain:
-	-Family
-		-In domain: 0.519 (old)
+	-Family (5 classes)
+		-In domain: 0.474
 		-Out of domain:
-	-Language
-		-In domain:
+	-Language (36 classes)
+		-In domain: 0.087
 		-Out of domain:

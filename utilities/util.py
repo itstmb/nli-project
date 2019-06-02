@@ -3,7 +3,7 @@ import errno
 import datetime
 import random
 
-import utilities.interpreter as i
+import utilities.interpreter as setup
 
 from ast import literal_eval
 
@@ -167,11 +167,11 @@ def write_scores(score):
                  'threads: {}\n' \
                  'max iterations: {}\n' \
                  'score: {}'.format(get_time(),
-                                    i.feature,
-                                    i.type,
-                                    i.domain,
-                                    i.threads,
-                                    i.iterations,
+                                    setup.feature,
+                                    setup.type,
+                                    setup.domain,
+                                    setup.threads,
+                                    setup.iterations,
                                     score)
 
     write_to_file(score_info)
