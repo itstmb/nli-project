@@ -18,21 +18,22 @@ def provide_vectors():
 
 def downsampler(user_vector, country_vector):
     log('Starting downsampling process')
-    classes_size = Counter(country_vector)
-    ds_size = min(classes_size, key=classes_size.get)
+    classes_sizes = Counter(country_vector)
+    print('class_sizes=', classes_sizes)
+    ds_size = min(classes_sizes.values())
 
     user_vector, country_vector = util.shuffle_vectors(user_vector, country_vector)
 
     new_users = []
     new_countries = []
-    class_counter = dict.fromkeys(Counter.keys(),0)  # Initialize all classes counters to 0
-
+    class_counter = dict.fromkeys(Counter(country_vector), 0)  # Initialize all classes counters to 0
     for user,country in zip(user_vector, country_vector):
         if class_counter[country] < ds_size:
             class_counter[country] += 1
             new_users.append(user)
             new_countries.append(country)
 
+    log('Downsampling results: Class size: ' + str(ds_size) + ', Total data size: ' + str(len(new_countries)))
     return new_users, new_countries
 
 
