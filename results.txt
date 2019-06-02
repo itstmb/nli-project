@@ -69,3 +69,27 @@ domain: in
 threads: 4
 max iterations: 2000
 score: 0.0875
+______
+[19:30:51]:
+feature: pos
+type: binary
+domain: out
+threads: 4
+max iterations: 2000
+score: 0.7384446629850973
+______
+[19:44:57]:
+feature: pos
+type: language
+domain: out
+threads: 4
+max iterations: 3000
+score: 0.07142857142857142
+______
+[19:45:12]:
+feature: pos
+type: family
+domain: out
+threads: 4
+max iterations: 3000
+score: 0.48812798203760877
