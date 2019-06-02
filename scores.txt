@@ -1,22 +1,22 @@
 Scores:
 
 -Trichars
-	-Binary
+	-Binary (2 classes)
 		-In domain: 0.861
-		-Out of domain: 0.656 (old)
-	-Family
-		-In domain: 0.718 (old)
-		-Out of domain: 0.670 (old)
-	-Language
-		-In domain:
-		-Out of domain:
+		-Out of domain: 0.775
+	-Family (5 classes)
+		-In domain: 0.780
+		-Out of domain: 0.634
+	-Language (39 classes)
+		-In domain:  0.545
+		-Out of domain: 0.274
 
 -POS Tags
 	-Binary
-		-In domain: 0.789
+		-In domain: 0.789 (old)
 		-Out of domain:
 	-Family
-		-In domain: 0.519
+		-In domain: 0.519 (old)
 		-Out of domain:
 	-Language
 		-In domain:

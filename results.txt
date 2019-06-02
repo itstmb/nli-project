@@ -1,2 +1,47 @@
+[13:25:29]:
+feature: trichar
+type: language
+domain: in
+threads: 4
+max iterations: 5000
+score: 0.5458333333333333
 ______
-0.8614564298255895
+[14:05:24]:
+feature: trichar
+type: binary
+domain: in
+threads: 4
+max iterations: 5000
+score: 0.8615565091842464
+______
+[14:26:40]:
+feature: trichar
+type: family
+domain: in
+threads: 4
+max iterations: 5000
+score: 0.7809514604810998
+______
+[14:30:35]:
+feature: trichar
+type: language
+domain: out
+threads: 4
+max iterations: 2000
+score: 0.27472527472527475
+______
+[14:31:57]:
+feature: trichar
+type: binary
+domain: out
+threads: 4
+max iterations: 2000
+score: 0.7750964520765564
+______
+[14:33:16]:
+feature: trichar
+type: family
+domain: out
+threads: 4
+max iterations: 2000
+score: 0.6349705304518664
