@@ -3,7 +3,6 @@ from collections import Counter
 from utilities.logger import log
 from pathlib import Path
 
-import random
 import utilities.interpreter as i
 import utilities.util as util
 import vectors_handling.uvg as uvg
