@@ -14,88 +14,6 @@ class Language(object):
         self.name = name
 
 
-FeatureToDirectory = {
-    'trichar': '/char_ngrams_chunks.tar/char_ngrams_chunks',
-    'pos': '/pos_chunks.tar/pos_chunks-004/pos_chunks'
-}
-
-
-def get_time():
-    return datetime.datetime.now().strftime("%X")
-
-
-# Takes 2 vectors and shuffles while keeping them in the same {a,b} fitting.
-def shuffle_vectors(vector_a, vector_b):
-    combined_vector = list(zip(vector_a,vector_b))
-    random.shuffle(combined_vector)
-    vector_a, vector_b = zip(*combined_vector)
-    return vector_a, vector_b
-
-
-def exists(path):
-    if path.is_file():
-        return True
-    return False
-
-
-def save_file(path, data_list):
-
-    # check / create directory
-    if not os.path.exists(os.path.dirname(path)):
-        try:
-            os.makedirs(os.path.dirname(path))
-        except OSError as exc:  # Guard against race condition
-            if exc.errno != errno.EEXIST:
-                raise
-
-    # write file
-    with open(path, 'w') as f:
-        for data in data_list:
-            f.write('%s\n' % data)
-    f.close()
-
-
-def write_scores(score):
-    score_info = '[{}]:\n' \
-                 'feature: {}\n' \
-                 'type: {}\n' \
-                 'domain: {}\n' \
-                 'threads: {}\n' \
-                 'max iterations: {}\n' \
-                 'score: {}'.format(get_time(),
-                                    setup.feature,
-                                    setup.type,
-                                    setup.domain,
-                                    setup.threads,
-                                    setup.iterations,
-                                    score)
-
-    write_to_file(score_info)
-
-
-def write_to_file(data):
-    with open('results.txt', 'a') as f:
-        f.write('______\n%s\n' % data)
-
-
-def load_countries(path):
-    try:
-        with open(path) as f:
-            countries_names = f.read().splitlines()
-    except IOError:
-        raise IOError('Error: Error loading file from path: ', path)
-    return countries_names
-
-def load_users(path):
-    try:
-        in_users = [literal_eval(line) for line in open(path, 'r')]
-    except IOError:
-        print ("Error: File does not appear to exist.")
-        return 0
-
-    return in_users
-
-
 LanguageDict = {
     'Albania': Language(False, 'Other', 'Albania'),
     'Armenia': Language(False, 'Other', 'Armenia'),
@@ -199,431 +117,86 @@ LanguageToNum = {
     'Vietnam': 38
 }
 
-FUNCTION_WORDS = [
-     "'d",
-     "'ll",
-     "'m",
-     "'re",
-     "'s",
-     "'ve",
-     "n't",
-     'a',
-     'about',
-     'above',
-     'according',
-     'accordingly',
-     'actual',
-     'actually',
-     'after',
-     'afterward',
-     'afterwards',
-     'again',
-     'against',
-     'ago',
-     'ah',
-     'all',
-     'almost',
-     'along',
-     'already',
-     'also',
-     'although',
-     'always',
-     'am',
-     'among',
-     'an',
-     'and',
-     'another',
-     'any',
-     'anybody',
-     'anyone',
-     'anything',
-     'anywhere',
-     'are',
-     'around',
-     'art',
-     'as',
-     'aside',
-     'at',
-     'away',
-     'ay',
-     'back',
-     'be',
-     'bear',
-     'because',
-     'been',
-     'before',
-     'being',
-     'below',
-     'beneath',
-     'beside',
-     'besides',
-     'better',
-     'between',
-     'beyond',
-     'bid',
-     'billion',
-     'billionth',
-     'both',
-     'bring',
-     'but',
-     'by',
-     'came',
-     'can',
-     'cannot',
-     'canst',
-     'certain',
-     'certainly',
-     'come',
-     'comes',
-     'consequently',
-     'could',
-     'couldst',
-     'dear',
-     'definite',
-     'definitely',
-     'despite',
-     'did',
-     'do',
-     'does',
-     'doing',
-     'done',
-     'dost',
-     'doth',
-     'doubtful',
-     'doubtfully',
-     'down',
-     'due',
-     'during',
-     'e.g.',
-     'each',
-     'earlier',
-     'early',
-     'eight',
-     'eighteen',
-     'eighteenth',
-     'eighth',
-     'eighthly',
-     'eightieth',
-     'eighty',
-     'either',
-     'eleven',
-     'eleventh',
-     'else',
-     'enough',
-     'enter',
-     'ere',
-     'erst',
-     'even',
-     'eventually',
-     'ever',
-     'every',
-     'everybody',
-     'everyone',
-     'everything',
-     'everywhere',
-     'example',
-     'except',
-     'exeunt',
-     'exit',
-     'fact',
-     'fair',
-     'far',
-     'farewell',
-     'few',
-     'fewer',
-     'fifteen',
-     'fifteenth',
-     'fifth',
-     'fifthly',
-     'fiftieth',
-     'fifty',
-     'finally',
-     'first',
-     'firstly',
-     'five',
-     'for',
-     'forever',
-     'forgo',
-     'forth',
-     'fortieth',
-     'forty',
-     'four',
-     'fourteen',
-     'fourteenth',
-     'fourth',
-     'fourthly',
-     'from',
-     'furthermore',
-     'generally',
-     'get',
-     'gets',
-     'getting',
-     'give',
-     'go',
-     'good',
-     'got',
-     'had',
-     'has',
-     'hast',
-     'hath',
-     'have',
-     'having',
-     'he',
-     'hence',
-     'her',
-     'here',
-     'hers',
-     'herself',
-     'him',
-     'himself',
-     'his',
-     'hither',
-     'ho',
-     'how',
-     'however',
-     'hundred',
-     'hundredth',
-     'i',
-     'if',
-     'in',
-     'indeed',
-     'instance',
-     'instead',
-     'into',
-     'is',
-     'it',
-     'its',
-     'itself',
-     'last',
-     'lastly',
-     'later',
-     'less',
-     'let',
-     'like',
-     'likely',
-     'many',
-     'matter',
-     'may',
-     'maybe',
-     'me',
-     'might',
-     'million',
-     'millionth',
-     'mine',
-     'more',
-     'moreover',
-     'most',
-     'much',
-     'must',
-     'my',
-     'myself',
-     'nay',
-     'near',
-     'nearby',
-     'nearly',
-     'neither',
-     'never',
-     'nevertheless',
-     'next',
-     'nine',
-     'nineteen',
-     'nineteenth',
-     'ninetieth',
-     'ninety',
-     'ninth',
-     'ninthly',
-     'no',
-     'nobody',
-     'none',
-     'noone',
-     'nor',
-     'not',
-     'nothing',
-     'now',
-     'nowhere',
-     'o',
-     'occasionally',
-     'of',
-     'off',
-     'oft',
-     'often',
-     'oh',
-     'on',
-     'once',
-     'one',
-     'only',
-     'or',
-     'order',
-     'other',
-     'others',
-     'ought',
-     'our',
-     'ours',
-     'ourselves',
-     'out',
-     'over',
-     'perhaps',
-     'possible',
-     'possibly',
-     'presumable',
-     'presumably',
-     'previous',
-     'previously',
-     'prior',
-     'probably',
-     'quite',
-     'rare',
-     'rarely',
-     'rather',
-     'result',
-     'resulting',
-     'round',
-     'said',
-     'same',
-     'say',
-     'second',
-     'secondly',
-     'seldom',
-     'seven',
-     'seventeen',
-     'seventeenth',
-     'seventh',
-     'seventhly',
-     'seventieth',
-     'seventy',
-     'shall',
-     'shalt',
-     'she',
-     'should',
-     'shouldst',
-     'similarly',
-     'since',
-     'six',
-     'sixteen',
-     'sixteenth',
-     'sixth',
-     'sixthly',
-     'sixtieth',
-     'sixty',
-     'so',
-     'soever',
-     'some',
-     'somebody',
-     'someone',
-     'something',
-     'sometimes',
-     'somewhere',
-     'soon',
-     'still',
-     'subsequently',
-     'such',
-     'sure',
-     'tell',
-     'ten',
-     'tenth',
-     'tenthly',
-     'than',
-     'that',
-     'the',
-     'thee',
-     'their',
-     'theirs',
-     'them',
-     'themselves',
-     'then',
-     'thence',
-     'there',
-     'therefore',
-     'these',
-     'they',
-     'thine',
-     'third',
-     'thirdly',
-     'thirteen',
-     'thirteenth',
-     'thirtieth',
-     'thirty',
-     'this',
-     'thither',
-     'those',
-     'thou',
-     'though',
-     'thousand',
-     'thousandth',
-     'three',
-     'thrice',
-     'through',
-     'thus',
-     'thy',
-     'till',
-     'tis',
-     'to',
-     'today',
-     'tomorrow',
-     'too',
-     'towards',
-     'twas',
-     'twelfth',
-     'twelve',
-     'twentieth',
-     'twenty',
-     'twice',
-     'twill',
-     'two',
-     'under',
-     'undergo',
-     'underneath',
-     'undoubtedly',
-     'unless',
-     'unlikely',
-     'until',
-     'unto',
-     'unusual',
-     'unusually',
-     'up',
-     'upon',
-     'us',
-     'very',
-     'was',
-     'wast',
-     'way',
-     'we',
-     'welcome',
-     'well',
-     'were',
-     'what',
-     'whatever',
-     'when',
-     'whence',
-     'where',
-     'whereas',
-     'wherefore',
-     'whether',
-     'which',
-     'while',
-     'whiles',
-     'whither',
-     'who',
-     'whoever',
-     'whom',
-     'whose',
-     'why',
-     'wil',
-     'will',
-     'wilst',
-     'wilt',
-     'with',
-     'within',
-     'without',
-     'would',
-     'wouldst',
-     'ye',
-     'yes',
-     'yesterday',
-     'yet',
-     'you',
-     'your',
-     'yours',
-     'yourself',
-     'yourselves'
-]
+
+FeatureToDirectory = {
+    'trichar': '/char_ngrams_chunks.tar/char_ngrams_chunks',
+    'pos': '/pos_chunks.tar/pos_chunks-004/pos_chunks'
+}
+
+
+def get_time():
+    return datetime.datetime.now().strftime("%X")
+
+
+# Takes 2 vectors and shuffles while keeping them in the same {a,b} fitting.
+def shuffle_vectors(vector_a, vector_b):
+    combined_vector = list(zip(vector_a,vector_b))
+    random.shuffle(combined_vector)
+    vector_a, vector_b = zip(*combined_vector)
+    return vector_a, vector_b
+
+
+def exists(path):
+    if path.is_file():
+        return True
+    return False
+
+
+def save_file(path, data_list):
+
+    # check / create directory
+    if not os.path.exists(os.path.dirname(path)):
+        try:
+            os.makedirs(os.path.dirname(path))
+        except OSError as exc:  # Guard against race condition
+            if exc.errno != errno.EEXIST:
+                raise
+
+    # write file
+    with open(path, 'w') as f:
+        for data in data_list:
+            f.write('%s\n' % data)
+    f.close()
+
+
+def write_scores(score):
+    score_info = '[{}]:\n' \
+                 'feature: {}\n' \
+                 'type: {}\n' \
+                 'domain: {}\n' \
+                 'threads: {}\n' \
+                 'max iterations: {}\n' \
+                 'score: {}'.format(get_time(),
+                                    setup.feature,
+                                    setup.type,
+                                    setup.domain,
+                                    setup.threads,
+                                    setup.iterations,
+                                    score)
+
+    write_to_file(score_info)
+
+
+def write_to_file(data):
+    with open('results.txt', 'a') as f:
+        f.write('______\n%s\n' % data)
+
+
+def load_countries(path):
+    try:
+        with open(path) as f:
+            countries_names = f.read().splitlines()
+    except IOError:
+        raise IOError('Error: Error loading file from path: ', path)
+    return countries_names
+
+def load_users(path):
+    try:
+        in_users = [literal_eval(line) for line in open(path, 'r')]
+    except IOError:
+        print ("Error: File does not appear to exist.")
+        return 0
+
+    return in_users
+
+
