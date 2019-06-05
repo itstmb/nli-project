@@ -21,3 +21,14 @@ Scores:
 	-Language (36 classes)
 		-In domain: 0.087
 		-Out of domain: 0.071
+
+-Unigrams
+	-Binary (2 classes)
+		-In domain: 0.722
+		-Out of domain: 0.678
+	-Family (5 classes)
+		-In domain: 0.465
+		-Out of domain: 0.313
+	-Language (36 classes)
+		-In domain: 0.088
+		-Out of domain: 0.056
