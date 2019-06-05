@@ -46,6 +46,8 @@ def provide_user_vector():
             uvg.provide_trichars_map()
         elif setup.feature == 'pos':
             uvg.provide_tripos_map()
+        elif setup.feature == 'unigrams':
+            uvg.provide_unigrams_map()
 
 
         uvg.generate(user_file_path)
