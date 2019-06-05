@@ -190,7 +190,7 @@ def token_unigram_process(user_dir):
         lines = file.readlines()
 
         for line in lines:
-            tokens = line.split(" ")
+            tokens = line.split()
             for token in tokens:
                 if token in unigram_map.keys():
                     user_vector[unigram_map.get(token)] += 1
@@ -238,7 +238,10 @@ def provide_top_unigram():
 def generate_top_unigrams(save_path):
     log('Generating top unigrams')
     all_unigrams = {}
-    discard_tokens = {"?", "!", ",", "...", ".", "(", ")", "[", "]", "/"}
+    discard_tokens = {"?", "!", ",", "...", ".", "(", ")", "[", "]", "/",
+                      "-",":","%",";","'","**","),","^","`", "=","+",
+                      "~","$","&","*","#","--","1","2","3","4","5","6",
+                      "7","8","9","10","_","20","30","40","50"}
     for domain_dir in os.scandir(setup.database):
         if domain_dir.name == 'europe_data' and setup.domain == 'in':
 
@@ -251,7 +254,7 @@ def generate_top_unigrams(save_path):
                         file = open(file_dir, "r", encoding="utf-8")
                         lines = file.readlines()
                         for line in lines:
-                            unigrams = line.split(" ")
+                            unigrams = line.split()
                             for token in unigrams:
                                 if token not in discard_tokens:
                                     if token not in all_unigrams.keys():
