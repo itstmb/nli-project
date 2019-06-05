@@ -187,34 +187,28 @@ def token_unigram_process(user_dir):
 
     for file_dir in os.scandir(user_dir):
         file = open(file_dir, 'r', encoding='utf-8')
+        chunk_vector =[0] * 1000
+        token_counter = 0
+        file_counter=1
         lines = file.readlines()
 
         for line in lines:
             tokens = line.split()
             for token in tokens:
+                token_counter+=1
                 if token in unigram_map.keys():
-                    user_vector[unigram_map.get(token)] += 1
+                    chunk_vector[unigram_map.get(token)] += 1
 
-    normalize_factor = count_tokens(user_dir)
+        for index in range(1000):
+            chunk_vector[index]/= token_counter
+            user_vector[index]+=chunk_vector[index]
+        file_counter+=1
 
     for index in range(1000):
-        user_vector[index]/= normalize_factor
+        user_vector[index]/=file_counter
 
     return user_vector
 
-def count_tokens(user_dir):
-
-    num_of_tokens=0
-    for file_dir in os.scandir(user_dir):
-        file = open(file_dir, 'r', encoding='utf-8')
-        lines = file.readlines()
-
-        for line in lines:
-            tokens = line.split(" ")
-            for token in tokens:
-                num_of_tokens += 1
-
-    return num_of_tokens
 
 def provide_unigrams_map():
     top_unigram = provide_top_unigram()
@@ -238,10 +232,10 @@ def provide_top_unigram():
 def generate_top_unigrams(save_path):
     log('Generating top unigrams')
     all_unigrams = {}
-    discard_tokens = {"?", "!", ",", "...", ".", "(", ")", "[", "]", "/",
-                      "-",":","%",";","'","**","),","^","`", "=","+",
-                      "~","$","&","*","#","--","1","2","3","4","5","6",
-                      "7","8","9","10","_","20","30","40","50"}
+    discard_tokens = {}#{"?", "!", ",", "...", ".", "(", ")", "[", "]", "/", "|",
+                 #     "-",":","%",";","'","**","),","^","`", "=","+", "\'\'","``",
+                  #    "\"","!,","~","$","&","*","#","--","1","2","3","4","5","6",
+                   #   "7","8","9","10","_","20","30","40","50","100"}
     for domain_dir in os.scandir(setup.database):
         if domain_dir.name == 'europe_data' and setup.domain == 'in':
 
