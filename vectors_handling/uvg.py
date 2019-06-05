@@ -39,7 +39,8 @@ def process_user(user_dir):
         return trichar_process(user_dir)
     elif setup.feature == 'pos':
         return pos_process(user_dir)
-
+    elif setup.feature == 'unigrams':
+        return token_unigram_process(user_dir)
 
 def trichar_process(user_dir):
     user_vector = [0] * 1000
@@ -67,7 +68,6 @@ def provide_trichars_map():
     for index in range(1000):
         trichars_map[heappop(top_trichars)] = index
 
-
 def provide_top_trichars():
     trichar_file_path = Path("vectors_handling/vectors/trichar/top_trichars.txt")
 
@@ -77,6 +77,8 @@ def provide_top_trichars():
 
     top_trichars = util.load_countries(trichar_file_path)
     return top_trichars
+
+
 
 
 def generate_top_trichars(save_path):
@@ -110,7 +112,6 @@ def generate_top_trichars(save_path):
     top_trichars = heapq.nlargest(1000, all_trichars, key=all_trichars.get)  # fetch top 1000 trichars
     util.save_file(save_path, top_trichars)
 
-
 def pos_process(user_dir):
     user_vector = [0] * 300
 
@@ -129,7 +130,6 @@ def pos_process(user_dir):
 
     return user_vector
 
-
 def provide_tripos_map():
     top_tripos = provide_top_tripos()
 
@@ -137,7 +137,6 @@ def provide_tripos_map():
     tripos_map = {}  # saves mapping between tripos and vector index
     for index in range(300):
         tripos_map[heappop(top_tripos)] = index
-
 
 def provide_top_tripos():
     tripos_file_path = Path("vectors_handling/vectors/pos/top_tripos.txt")
@@ -148,7 +147,6 @@ def provide_top_tripos():
 
     top_tripos = util.load_countries(tripos_file_path)
     return top_tripos
-
 
 def generate_top_tripos(save_path):
     log('Generating top trichars')
@@ -182,3 +180,84 @@ def generate_top_tripos(save_path):
 
     top_tripos = heapq.nlargest(300, all_tripos, key=all_tripos.get)  # fetch top 1000 tripos
     util.save_file(save_path, top_tripos)
+
+
+def token_unigram_process(user_dir):
+    user_vector = [0] * 1000
+
+    for file_dir in os.scandir(user_dir):
+        file = open(file_dir, 'r', encoding='utf-8')
+        lines = file.readlines()
+
+        for line in lines:
+            tokens = line.split(" ")
+            for token in tokens:
+                if token in unigram_map.keys():
+                    user_vector[unigram_map.get(token)] += 1
+
+    normalize_factor = count_tokens(user_dir)
+
+    for index in range(1000):
+        user_vector[index]/= normalize_factor
+
+    return user_vector
+
+def count_tokens(user_dir):
+
+    num_of_tokens=0
+    for file_dir in os.scandir(user_dir):
+        file = open(file_dir, 'r', encoding='utf-8')
+        lines = file.readlines()
+
+        for line in lines:
+            tokens = line.split(" ")
+            for token in tokens:
+                num_of_tokens += 1
+
+    return num_of_tokens
+
+def provide_unigrams_map():
+    top_unigram = provide_top_unigram()
+
+    global unigram_map
+    unigram_map ={}
+
+    for index in range(1000):
+        unigram_map[heappop(top_unigram)]= index
+
+def provide_top_unigram():
+    unigram_file_path = Path("vectors_handling/vectors/unigrams/top_unigrams.txt")
+
+    if not util.exists(unigram_file_path): # can't find the file in memory
+        log('Cannot find top unigrams file') # redundant
+        generate_top_unigrams(unigram_file_path)
+
+    top_unigrams = util.load_countries(unigram_file_path)
+    return top_unigrams
+
+def generate_top_unigrams(save_path):
+    log('Generating top unigrams')
+    all_unigrams = {}
+    discard_tokens = {"?", "!", ",", "...", ".", "(", ")", "[", "]", "/"}
+    for domain_dir in os.scandir(setup.database):
+        if domain_dir.name == 'europe_data' and setup.domain == 'in':
+
+            for country_dir in os.scandir(domain_dir):
+                country_name = str.split(os.path.basename(country_dir), '.')[1]
+                log('Generating top unigrams for ' + country_name)
+                for user_dir in os.scandir(country_dir):
+
+                    for file_dir in os.scandir(user_dir):
+                        file = open(file_dir, "r", encoding="utf-8")
+                        lines = file.readlines()
+                        for line in lines:
+                            unigrams = line.split(" ")
+                            for token in unigrams:
+                                if token not in discard_tokens:
+                                    if token not in all_unigrams.keys():
+                                        all_unigrams[token] = 1
+                                    else:
+                                        all_unigrams[token] += 1
+
+    top_unigrams = heapq.nlargest(1000, all_unigrams, key=all_unigrams.get)  # fetch top 1000 unigrams
+    util.save_file(save_path, top_unigrams)
