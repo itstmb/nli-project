@@ -48,7 +48,8 @@ def provide_user_vector():
             uvg.provide_tripos_map()
         elif setup.feature == 'unigrams':
             uvg.provide_unigrams_map()
-
+        elif setup.feature == 'functionwords':
+            uvg.provide_function_words_map()
 
         uvg.generate(user_file_path)
 
