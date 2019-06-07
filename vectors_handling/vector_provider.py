@@ -66,7 +66,7 @@ def provide_country_vector():
         cvg.generate(country_file_path)
 
     log('Loading country vectors from file')
-    country_names = util.load_countries(country_file_path)
+    country_names = util.load_file(country_file_path)
     country_vector = class_converter(country_names)
     return country_vector
 

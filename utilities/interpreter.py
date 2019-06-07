@@ -18,9 +18,9 @@ threads: [-1 - 16]
 def get_params():
     global feature, type, domain, threads, iterations
 
-    feature = input('Feature? [trichar/pos/unigrams/functionwords] : ')
-    type = input('Classification type? [binary/family/language] : ')
-    domain = input('Domain? [in/out] : ')
+    feature = input('Feature? ' + str(possible_inputs[0]) + ' : ')
+    type = input('Classification type? ' + str(possible_inputs[1]) + ' : ')
+    domain = input('Domain? ' + str(possible_inputs[2]) + ' : ')
     threads = int(input('Number of threads? [-1 - 16] : '))
     iterations = int(input('Maximum iterations? [-1-1,000,000] : '))
 
@@ -33,4 +33,4 @@ def get_params():
 
 def get_database():
     global database
-    database = util.load_countries('utilities/database_dir.txt')[0] + util.FeatureToDirectory[feature]
+    database = util.load_file('utilities/database_dir.txt')[0] + util.FeatureToDirectory[feature]

@@ -78,7 +78,7 @@ def provide_top_trichars():
         log('Cannot find top trichars file') # redundant
         generate_top_trichars(trichar_file_path)
 
-    top_trichars = util.load_countries(trichar_file_path)
+    top_trichars = util.load_file(trichar_file_path)
     return top_trichars
 
 
@@ -146,7 +146,7 @@ def provide_top_tripos():
         log('Cannot find top tripos file') # redundant
         generate_top_tripos(tripos_file_path)
 
-    top_tripos = util.load_countries(tripos_file_path)
+    top_tripos = util.load_file(tripos_file_path)
     return top_tripos
 
 def generate_top_tripos(save_path):
@@ -228,17 +228,14 @@ def provide_top_unigram():
         log('Cannot find top unigrams file') # redundant
         generate_top_unigrams(unigram_file_path)
 
-    top_unigrams = util.load_countries(unigram_file_path)
+    top_unigrams = util.load_file(unigram_file_path)
     return top_unigrams
 
 
 def generate_top_unigrams(save_path):
     log('Generating top unigrams')
     all_unigrams = {}
-    discard_tokens = {}#{"?", "!", ",", "...", ".", "(", ")", "[", "]", "/", "|",
-                 #     "-",":","%",";","'","**","),","^","`", "=","+", "\'\'","``",
-                  #    "\"","!,","~","$","&","*","#","--","1","2","3","4","5","6",
-                   #   "7","8","9","10","_","20","30","40","50","100"}
+
     for domain_dir in os.scandir(setup.database):
         if domain_dir.name == 'europe_data' and setup.domain == 'in':
 
@@ -253,18 +250,17 @@ def generate_top_unigrams(save_path):
                         for line in lines:
                             unigrams = line.split()
                             for token in unigrams:
-                                if token not in discard_tokens:
-                                    if token not in all_unigrams.keys():
-                                        all_unigrams[token] = 1
-                                    else:
-                                        all_unigrams[token] += 1
+                                if token not in all_unigrams.keys():
+                                    all_unigrams[token] = 1
+                                else:
+                                    all_unigrams[token] += 1
 
     top_unigrams = heapq.nlargest(1000, all_unigrams, key=all_unigrams.get)  # fetch top 1000 unigrams
     util.save_file(save_path, top_unigrams)
 
 
 def function_words_process(user_dir):
-    user_vector = [0] * 1000
+    user_vector = [0] * len(function_words_map)
 
     for file_dir in os.scandir(user_dir):
         file = open(file_dir, 'r', encoding='utf-8')
@@ -280,66 +276,11 @@ def function_words_process(user_dir):
 
 
 def provide_function_words_map():
-    function_words = provide_function_words()
+    function_words_file_path = Path("vectors_handling/vectors/functionwords/function_words.txt")
+    function_words = util.load_file(function_words_file_path)
 
     global function_words_map
     function_words_map={}
 
-    for index in range(426):
+    for index in range(len(function_words)):
         function_words_map[heappop(function_words)] = index
-
-
-def provide_function_words():
-    function_words_file_path = Path("vectors_handling/vectors/functionwords/fucnction_words.txt")
-
-    if not util.exists(function_words_file_path): # can't find the file in memory
-        log('Cannot find top unigrams file') # redundant
-        generate_function_words(function_words_file_path)
-
-    function_words = util.load_countries(function_words_file_path)
-    return function_words
-
-
-def generate_function_words(save_path):
-    log('Generating top unigrams')
-    FUNCTION_WORDS = {"'d", "'ll", "'m", "'re", "'s", "'ve", "n't", 'a', 'about', 'above', 'according', 'accordingly',
-                      'actual', 'actually', 'after', 'afterward', 'afterwards', 'again', 'against', 'ago', 'ah', 'all',
-                      'almost', 'along', 'already', 'also', 'although', 'always', 'am', 'among', 'an', 'and', 'another',
-                      'any', 'anybody', 'anyone', 'anything', 'anywhere', 'are', 'around', 'art', 'as', 'aside', 'at',
-                      'away', 'ay', 'back', 'be', 'bear', 'because', 'been', 'before', 'being', 'below', 'beneath',
-                      'beside', 'besides', 'better', 'between', 'beyond', 'bid', 'billion', 'billionth', 'both', 'bring',
-                      'but', 'by', 'came', 'can', 'cannot', 'canst', 'certain', 'certainly', 'come', 'comes', 'consequently',
-                      'could', 'couldnt', 'dear', 'definite', 'definitely', 'despite', 'did', 'do', 'does', 'doing', 'done',
-                      'dost', 'doth', 'doubtful', 'doubtfully', 'down', 'due', 'during', 'e.g.', 'each', 'earlier', 'early',
-                      'eight', 'eighteen', 'eighteenth', 'eighth', 'eighthly', 'eightieth', 'eighty', 'either', 'eleven',
-                      'eleventh', 'else', 'enough', 'enter', 'ere', 'erst', 'even', 'eventually', 'ever', 'every', 'everybody',
-                      'everyone', 'everything', 'everywhere', 'example', 'except', 'exeunt', 'exit', 'fact', 'fair', 'far',
-                      'farewell', 'few', 'fewer', 'fifteen', 'fifteenth', 'fifth', 'fifthly', 'fiftieth', 'fifty', 'finally',
-                      'first', 'firstly', 'five', 'for', 'forever', 'forgo', 'forth', 'fortieth', 'forty', 'four', 'fourteen',
-                      'fourteenth', 'fourth', 'fourthly', 'from', 'furthermore', 'generally', 'get', 'gets', 'getting', 'give',
-                      'go', 'good', 'got', 'had', 'has', 'hast', 'hath', 'have', 'having', 'he', 'hence', 'her', 'here', 'hers',
-                      'herself', 'him', 'himself', 'his', 'hither', 'ho', 'how', 'however', 'hundred', 'hundredth', 'i', 'if',
-                      'in', 'indeed', 'instance', 'instead', 'into', 'is', 'it', 'its', 'itself', 'last', 'lastly', 'later',
-                      'less', 'let', 'like', 'likely', 'many', 'matter', 'may', 'maybe', 'me', 'might', 'million', 'millionth',
-                      'mine', 'more', 'moreover', 'most', 'much', 'must', 'my', 'myself', 'nay', 'near', 'nearby', 'nearly',
-                      'neither', 'never', 'nevertheless', 'next', 'nine', 'nineteen', 'nineteenth', 'ninetieth', 'ninety',
-                      'ninth', 'ninthly', 'no', 'nobody', 'none', 'noone', 'nor', 'not', 'nothing', 'now', 'nowhere',
-                      'o', 'occasionally', 'of', 'off', 'oft', 'often', 'oh', 'on', 'once', 'one', 'only', 'or', 'order',
-                      'other', 'others', 'ought', 'our', 'ours', 'ourselves', 'out', 'over', 'perhaps', 'possible', 'possibly',
-                      'presumable', 'presumably', 'previous', 'previously', 'prior', 'probably', 'quite', 'rare', 'rarely',
-                      'rather', 'result', 'resulting', 'round', 'said', 'same', 'say', 'second', 'secondly', 'seldom', 'seven',
-                      'seventeen', 'seventeenth', 'seventh', 'seventhly', 'seventieth', 'seventy', 'shall', 'shalt', 'she',
-                      'should', 'shouldst', 'similarly', 'since', 'six', 'sixteen', 'sixteenth', 'sixth', 'sixthly', 'sixtieth',
-                      'sixty', 'so', 'soever', 'some', 'somebody', 'someone', 'something', 'sometimes', 'somewhere',
-                      'soon', 'still', 'subsequently', 'such', 'sure', 'tell', 'ten', 'tenth', 'tenthly', 'than', 'that', 'the',
-                      'thee', 'their', 'theirs', 'them', 'themselves', 'then', 'thence', 'there', 'therefore', 'these', 'they',
-                      'thine', 'third', 'thirdly', 'thirteen', 'thirteenth', 'thirtieth', 'thirty', 'this', 'thither', 'those',
-                      'thou', 'though', 'thousand', 'thousandth', 'three', 'thrice', 'through', 'thus', 'thy', 'till', 'tis',
-                      'to', 'today', 'tomorrow', 'too', 'towards', 'twas', 'twelfth', 'twelve', 'twentieth', 'twenty', 'twice',
-                      'twill', 'two', 'under', 'undergo', 'underneath', 'undoubtedly', 'unless',  'unlikely', 'until', 'unto',
-                      'unusual', 'unusually', 'up', 'upon', 'us', 'very', 'was', 'wast', 'way', 'we', 'welcome',
-                      'well', 'were', 'what', 'whatever', 'when', 'whence', 'where', 'whereas', 'wherefore', 'whether',
-                      'which', 'while', 'whiles', 'whither', 'who', 'whoever', 'whom', 'whose', 'why', 'wil', 'will', 'wilst', 'wilt',
-                      'with', 'within', 'without', 'would', 'wouldst', 'ye', 'yes', 'yesterday', 'yet', 'you', 'your', 'yours',
-                      'yourself', 'yourselves'}
-    util.save_file(save_path, FUNCTION_WORDS)
