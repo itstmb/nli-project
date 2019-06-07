@@ -48,7 +48,8 @@ def provide_user_vector():
             uvg.provide_tripos_map()
         elif setup.feature == 'unigrams':
             uvg.provide_unigrams_map()
-
+        elif setup.feature == 'functionwords':
+            uvg.provide_function_words_map()
 
         uvg.generate(user_file_path)
 
@@ -65,7 +66,7 @@ def provide_country_vector():
         cvg.generate(country_file_path)
 
     log('Loading country vectors from file')
-    country_names = util.load_countries(country_file_path)
+    country_names = util.load_file(country_file_path)
     country_vector = class_converter(country_names)
     return country_vector
 

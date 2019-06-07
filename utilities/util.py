@@ -121,7 +121,8 @@ LanguageToNum = {
 FeatureToDirectory = {
     'trichar': '/char_ngrams_chunks.tar/char_ngrams_chunks',
     'pos': '/pos_chunks.tar/pos_chunks-004/pos_chunks',
-    'unigrams' : '/text_chunks.tar/text_chunks'
+    'unigrams' : '/text_chunks.tar/text_chunks',
+    'functionwords' : '/text_chunks.tar/text_chunks'
 }
 
 
@@ -183,13 +184,13 @@ def write_to_file(data):
         f.write('______\n%s\n' % data)
 
 
-def load_countries(path):
+def load_file(path):
     try:
         with open(path) as f:
-            countries_names = f.read().splitlines()
+            data = f.read().splitlines()
     except IOError:
         raise IOError('Error: Error loading file from path: ', path)
-    return countries_names
+    return data
 
 def load_users(path):
     try:
