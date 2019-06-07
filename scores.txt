@@ -32,3 +32,14 @@ Scores:
 	-Language (36 classes)
 		-In domain: 0.088
 		-Out of domain: 0.056
+
+-Function Words
+	-Binary (2 classes)
+		-In domain: 0.752
+		-Out of domain: 0.760
+	-Family (5 classes)
+		-In domain: 0.541
+		-Out of domain: 0.559
+	-Language (36 classes)
+		-In domain: 0.101
+		-Out of domain: 0.098
