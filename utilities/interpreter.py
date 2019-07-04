@@ -1,7 +1,7 @@
 import utilities.util as util
 
 possible_inputs = {
-    0: ['trichar', 'pos' , 'unigrams', 'functionwords'],
+    0: ['trichar', 'pos' , 'unigrams', 'functionwords','synchronized_functionwords'],
     1: ['binary','family', 'language'],
     2: ['in', 'out'],
     3: [x for x in range(-1, 17)]
@@ -16,9 +16,11 @@ threads: [-1 - 16]
 
 
 def get_params():
-    global feature, type, domain, threads, iterations
+    global feature, type, domain, threads, iterations, numOfFunctionwords
 
     feature = input('Feature? ' + str(possible_inputs[0]) + ' : ')
+    if feature == 'synchronized_functionwords':
+        numOfFunctionwords= int(input('numOfFunctionwords?: '))
     type = input('Classification type? ' + str(possible_inputs[1]) + ' : ')
     domain = input('Domain? ' + str(possible_inputs[2]) + ' : ')
     threads = int(input('Number of threads? [-1 - 16] : '))

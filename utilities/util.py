@@ -122,7 +122,8 @@ FeatureToDirectory = {
     'trichar': '/char_ngrams_chunks.tar/char_ngrams_chunks',
     'pos': '/pos_chunks.tar/pos_chunks-004/pos_chunks',
     'unigrams' : '/text_chunks.tar/text_chunks',
-    'functionwords' : '/text_chunks.tar/text_chunks'
+    'functionwords' : '/text_chunks.tar/text_chunks',
+    'synchronized_functionwords' : '/text_chunks.tar/text_chunks'
 }
 
 
