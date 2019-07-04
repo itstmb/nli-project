@@ -43,6 +43,8 @@ def process_user(user_dir):
         return token_unigram_process(user_dir)
     elif setup.feature == 'functionwords':
         return function_words_process(user_dir)
+    elif setup.feature == 'synchronized_functionwords':
+        return syncronized_functionwords_process(user_dir)
 
 
 def trichar_process(user_dir):
@@ -278,9 +280,70 @@ def function_words_process(user_dir):
 def provide_function_words_map():
     function_words_file_path = Path("vectors_handling/vectors/functionwords/function_words.txt")
     function_words = util.load_file(function_words_file_path)
-
     global function_words_map
     function_words_map={}
 
     for index in range(len(function_words)):
         function_words_map[heappop(function_words)] = index
+
+
+def syncronized_functionwords_process(user_dir):
+
+    provide_courpus_functionwords(setup.numOfFunctionwords)
+
+    user_vector = [0]*len(top_corpus_functionwords)
+    indexed_top_corpus_functionwords={}
+
+    index=0
+    for word in top_corpus_functionwords:
+        indexed_top_corpus_functionwords[word]=index
+        index +=1
+
+    for file_dir in os.scandir(user_dir):
+        file = open(file_dir, 'r', encoding='utf-8')
+        lines = file.readlines()
+
+        for line in lines:
+            words = line.split()
+            for word in words:
+                if word in top_corpus_functionwords:
+                    user_vector[indexed_top_corpus_functionwords.get(word)] += 1
+
+    return user_vector
+
+def provide_courpus_functionwords(numOfFunctionwords):
+
+    global top_corpus_functionwords
+    top_corpus_functionwords={}
+
+    synchronized_functionwords_file_path = Path("vectors_handling/vectors/synchronized_functionwords/synchronized_functionwords.txt")
+
+    if not util.exists(synchronized_functionwords_file_path):  # can't find the file in memory
+        log('Cannot find synchronized_functionwords file')  # redundant
+
+        corpus_functionwords = {}
+
+        for domain_dir in os.scandir(setup.database):
+            if domain_dir.name == 'europe_data' and setup.domain == 'in':
+                for country_dir in os.scandir(domain_dir):
+                    country_name = str.split(os.path.basename(country_dir), '.')[1]
+                    log('Counting function words in ' + country_name)
+                    for user_dir in os.scandir(country_dir):
+                        for file_dir in os.scandir(user_dir):
+                            file = open(file_dir, "r", encoding="utf-8")
+                            lines = file.readlines()
+                            for line in lines:
+                                words = line.split()
+                                for word in words:
+                                    if word in function_words_map.keys():
+                                        if word not in corpus_functionwords.keys():
+                                            corpus_functionwords[word] = 1
+                                        else:
+                                            corpus_functionwords[word] += 1
+
+        top_corpus_functionwords = heapq.nlargest(numOfFunctionwords, corpus_functionwords,
+                                                  key=corpus_functionwords.get)
+        util.save_file(synchronized_functionwords_file_path, top_corpus_functionwords)
+
+    top_corpus_functionwords = util.load_file(synchronized_functionwords_file_path)
+    return top_corpus_functionwords
