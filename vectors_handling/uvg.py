@@ -156,7 +156,7 @@ def generate_top_tripos(save_path):
     all_tripos = {}
 
     for domain_dir in os.scandir(setup.database):
-        if domain_dir.name == 'europe_data' and i.domain == 'in':
+        if domain_dir.name == 'europe_data' and setup.domain == 'in':
 
             for country_dir in os.scandir(domain_dir):
                 country_name = str.split(os.path.basename(country_dir), '.')[1]
@@ -170,8 +170,6 @@ def generate_top_tripos(save_path):
                         for line in lines:  # parse lines within chunk text
                             pos_tokens = re.split("'\), \('|'\), \(\"", line)
                             for i in range(len(pos_tokens) - 3):
-                                if i == len(pos_tokens) - 3:
-                                    pos_tokens[i + 2] = pos_tokens[i + 1][:len(pos_tokens[i + 2]) - 2]
                                 trigram = ""
                                 for j in range(i, i + 2):
                                     trigram = trigram + re.split("', '|\", '", pos_tokens[j])[1] + " "
