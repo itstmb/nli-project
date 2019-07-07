@@ -39,6 +39,8 @@ def process_user(user_dir):
         return trichar_process(user_dir)
     elif setup.feature == 'pos':
         return pos_process(user_dir)
+    elif setup.feature == 'bipos':
+        return bipos_process(user_dir)
     elif setup.feature == 'unigrams':
         return token_unigram_process(user_dir)
     elif setup.feature == 'functionwords':
@@ -73,6 +75,7 @@ def provide_trichars_map():
     for index in range(1000):
         trichars_map[heappop(top_trichars)] = index
 
+
 def provide_top_trichars():
     trichar_file_path = Path("vectors_handling/vectors/trichar/top_trichars.txt")
 
@@ -82,7 +85,6 @@ def provide_top_trichars():
 
     top_trichars = util.load_file(trichar_file_path)
     return top_trichars
-
 
 def generate_top_trichars(save_path):
     log('Generating top trichars')
@@ -133,6 +135,7 @@ def pos_process(user_dir):
 
     return user_vector
 
+
 def provide_tripos_map():
     top_tripos = provide_top_tripos()
 
@@ -144,12 +147,14 @@ def provide_tripos_map():
 def provide_top_tripos():
     tripos_file_path = Path("vectors_handling/vectors/pos/top_tripos.txt")
 
-    if not util.exists(tripos_file_path): # can't find the file in memory
-        log('Cannot find top tripos file') # redundant
+    if not util.exists(tripos_file_path):  # can't find the file in memory
+        log('Cannot find top tripos file')  # redundant
         generate_top_tripos(tripos_file_path)
 
     top_tripos = util.load_file(tripos_file_path)
     return top_tripos
+
+
 
 def generate_top_tripos(save_path):
     log('Generating top trichars')
@@ -183,6 +188,7 @@ def generate_top_tripos(save_path):
 
     top_tripos = heapq.nlargest(300, all_tripos, key=all_tripos.get)  # fetch top 1000 tripos
     util.save_file(save_path, top_tripos)
+
 
 
 def token_unigram_process(user_dir):
@@ -347,3 +353,73 @@ def provide_courpus_functionwords(numOfFunctionwords):
 
     top_corpus_functionwords = util.load_file(synchronized_functionwords_file_path)
     return top_corpus_functionwords
+
+
+
+def provide_bipos_map():
+    top_bipos = provide_top_bipos()
+
+    global bipos_map
+    bipos_map = {}  # saves mapping between tripos and vector index
+    for index in range(300):
+        bipos_map[heappop(top_bipos)] = index
+
+def bipos_process(user_dir):
+    user_vector = [0] * 300
+
+    for file_dir in os.scandir(user_dir):
+        file = open(file_dir, 'r', encoding='utf-8')
+
+        for line in file:
+            pos_tokens = re.split("'\), \('|'\), \(\"", line)
+            for i in range(len(pos_tokens)-2):
+                bigram = ""
+                for j in range(i, i + 1):
+                    bigram += re.split("', '|\", '", pos_tokens[j])[1] + " "
+                    bigram = bigram + re.split("', '|\", '", pos_tokens[i+1])[1]
+                if bigram in bipos_map.keys():
+                    user_vector[bipos_map.get(bigram)] += 1
+
+    return user_vector
+
+def provide_top_bipos():
+    bipos_file_path = Path("vectors_handling/vectors/bipos/top_bipos.txt")
+
+    if not util.exists(bipos_file_path):  # can't find the file in memory
+        log('Cannot find top bipos file')  # redundant
+        generate_top_bipos(bipos_file_path)
+
+    top_bipos = util.load_file(bipos_file_path)
+    return top_bipos
+
+def generate_top_bipos(save_path):
+    log('Generating top bichars')
+    all_bipos = {}
+
+    for domain_dir in os.scandir(setup.database):
+        if domain_dir.name == 'europe_data' and setup.domain == 'in':
+
+            for country_dir in os.scandir(domain_dir):
+                country_name = str.split(os.path.basename(country_dir), '.')[1]
+                log('Generating top bipos for ' + country_name)
+                for user_dir in os.scandir(country_dir):
+
+                    for file_dir in os.scandir(user_dir):
+                        file = open(file_dir, "r", encoding="utf-8")
+                        lines = file.readlines()
+
+                        for line in lines:  # parse lines within chunk text
+                            pos_tokens = re.split("'\), \('|'\), \(\"", line)
+                            for i in range(len(pos_tokens) - 2):
+                                bigram = ""
+                                bigram = bigram + re.split("', '|\", '", pos_tokens[i])[1] + " "
+                                bigram = bigram + re.split("', '|\", '", pos_tokens[i + 1])[1]
+                                if bigram not in all_bipos.keys():
+                                    all_bipos[bigram] = 1
+                                else:
+                                    all_bipos[bigram] += 1
+
+    top_bipos = heapq.nlargest(300, all_bipos, key=all_bipos.get)  # fetch top 300 bipos
+    util.save_file(save_path, top_bipos)
+
+
