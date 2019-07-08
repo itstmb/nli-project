@@ -47,7 +47,112 @@ def process_user(user_dir):
         return function_words_process(user_dir)
     elif setup.feature == 'synchronized_functionwords':
         return syncronized_functionwords_process(user_dir)
+    elif setup.feature == 'avgcapital':
+        return avgcapital_process(user_dir)
+    elif setup.feature == 'numberwords':
+        return numberwords_process(user_dir)
+    elif setup.feature == 'punctuations':
+        return punctuations_process(user_dir)
 
+def punctuations_process(user_dir):
+    user_vector = [0]*9
+    # [cell 0][cell 1][cell 2 ][cell 3 ][cell 4][cell 5][cell 6][cell 7][cell 8]
+    # [  ,  ][   .   ][   ?   ][   !   ][   -  ][   :  ][   ;  ][   "  ][   '  ]
+    punctuations={',':'0', '.':'1', '?':'2','!':'3', '-':'4',':':'5',';':'6','"':'7',"'":'8'}
+    sum=0
+    totalfiles = len(os.listdir(user_dir))
+    for file_dir in os.scandir(user_dir):
+        file = open(file_dir, 'r', encoding='utf-8')
+        lines = file.readlines()
+        for line in lines:
+            words = re.split(" ",line)
+            for word in words:
+                for char in word:
+                    if char in punctuations.keys():
+                        user_vector[int(punctuations.get(char))]+=1
+                        sum+=1
+
+    for i in range(8):
+        user_vector[i]/=totalfiles
+
+    # user_name = os.path.basename(user_dir)
+    # log('User vector for ' + user_name+' is:')
+    # print(user_vector)
+    return user_vector
+
+
+
+
+def numberwords_process(user_dir):
+    user_vector=[0]*2
+    numcounter=0
+    wordscounter=0
+    avgnumfile=0
+    avgwordfile=0
+    finalavgnum=0
+    finalavgword=0
+    totalfiles = len(os.listdir(user_dir))
+
+    wordnumbers=["one","two","three","four","five","six","seven","eight","nine","ten",
+             "eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen",
+             "eighteen","nineteen","twenty","thirty","forty", "fifty","sixty",
+             "seventy","eighty","ninety", "hundred","1k", "2k", "3k", "4k", "5k"]
+    numbers =['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16',
+              '17','18','19','20','30','40','50','60','70','80','90','100','1000',
+              '2000','3000','4000']
+    for file_dir in os.scandir(user_dir):
+        numcounter=0
+        wordscounter=0
+        file = open(file_dir, 'r', encoding='utf-8')
+        lines = file.readlines()
+        for line in lines:
+            words = re.split(" ",line)
+            for word in words:
+                if word in wordnumbers:
+                    wordscounter+=1
+                elif word in numbers:
+                    numcounter+=1
+        finalavgnum += numcounter / len(lines)
+        finalavgword += wordscounter / len(lines)
+
+    user_vector[0]=finalavgword/totalfiles
+    user_vector[1]=finalavgnum/totalfiles
+    # user_name = os.path.basename(user_dir)
+    # log('User vector for ' + user_name+' is:')
+    # print(user_vector)
+    return user_vector
+
+
+
+def avgcapital_process(user_dir):
+    user_vector=[0]
+    capitalCounter =0
+    totalavg=0
+    avgperline=0
+    avgperfile=0
+    totalfiles = len(os.listdir(user_dir))
+
+    for file_dir in os.scandir(user_dir):
+        file = open(file_dir, 'r', encoding='utf-8')
+        lines = file.readlines()
+        for line in lines:
+            words = re.split(" ",line)
+            for word in words:
+                for char in word:
+                    if (char.isupper()) == True:
+                        print("TEST")
+                        capitalCounter += 1
+            avgperline = capitalCounter / len(line)
+            totalavg += avgperline
+            capitalCounter = 0
+
+        avgperfile += totalavg/len(lines)
+        totalavg =0
+    # user_name = os.path.basename(user_dir)
+    user_vector[0]=avgperfile/totalfiles
+    # log('User vector for ' + user_name+' is:')
+    # print(user_vector[0])
+    return user_vector
 
 def trichar_process(user_dir):
     user_vector = [0] * 1000

@@ -261,3 +261,43 @@ domain: in
 threads: 8
 max iterations: 2500
 score: 0.6093567251461989
+______
+[11:41:12]:
+feature: avgcapital
+type: binary
+domain: in
+threads: 8
+max iterations: 2000
+score: 0.5
+______
+[12:30:53]:
+feature: numberwords
+type: binary
+domain: in
+threads: 8
+max iterations: 2000
+score: 0.5263157894736842
+______
+[13:01:21]:
+feature: numberwords
+type: binary
+domain: in
+threads: 8
+max iterations: 2000
+score: 0.5514619883040935
+______
+[13:03:41]:
+feature: numberwords
+type: binary
+domain: in
+threads: 8
+max iterations: 2000
+score: 0.5350877192982455
+______
+[13:10:34]:
+feature: punctuations
+type: binary
+domain: in
+threads: 8
+max iterations: 2000
+score: 0.5459064327485381

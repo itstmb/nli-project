@@ -55,8 +55,7 @@ def provide_user_vector():
         elif setup.feature == 'synchronized_functionwords':
             uvg.provide_function_words_map()
             uvg.provide_courpus_functionwords(setup.numOfFunctionwords)
-        elif setup.feature == 'avgcapital':
-            uvg.provide_avgcapital_map()
+
 
         uvg.generate(user_file_path)
 
