@@ -12,3 +12,4 @@ vectors_handling/vectors/trichar/users_out.txt
 *.npy
 *.xml
 *.pyc
+utilities/database_dir.txt
