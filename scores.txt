@@ -47,10 +47,10 @@ Scores:
 -Bi-POS Tags
 	-Binary (2 classes)
 		-In domain: 0.758
-		-Out of domain: 
+		-Out of domain: 0.760
 	-Family (5 classes)
 		-In domain: 0.520
-		-Out of domain: 
+		-Out of domain: 0.520
 	-Language (36 classes)
 		-In domain: 0.155
-		-Out of domain: 
+		-Out of domain: 0.086
