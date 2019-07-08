@@ -126,7 +126,8 @@ FeatureToDirectory = {
     'synchronized_functionwords' : '/text_chunks.tar/text_chunks',
     'bipos': '/pos_chunks.tar/pos_chunks-004/pos_chunks',
     'avgcapital': '/text_chunks.tar/text_chunks',
-    'numberwords': '/text_chunks.tar/text_chunks'
+    'numberwords': '/text_chunks.tar/text_chunks',
+    'punctuations': '/text_chunks.tar/text_chunks'
 }
 
 
