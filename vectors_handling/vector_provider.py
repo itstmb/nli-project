@@ -54,7 +54,7 @@ def provide_user_vector():
             uvg.provide_function_words_map()
         elif setup.feature == 'synchronized_functionwords':
             uvg.provide_function_words_map()
-            uvg.provide_courpus_functionwords(setup.numOfFunctionwords)
+            uvg.provide_corpus_functionwords(setup.numOfFunctionwords)
 
 
         uvg.generate(user_file_path)

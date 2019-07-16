@@ -46,11 +46,44 @@ Scores:
 
 -Bi-POS Tags
 	-Binary (2 classes)
-		-In domain: 0.758
-		-Out of domain: 0.760
+		-In domain: 0.759
+		-Out of domain: 
 	-Family (5 classes)
-		-In domain: 0.520
-		-Out of domain: 0.520
+		-In domain: 0.521
+		-Out of domain: 
 	-Language (36 classes)
-		-In domain: 0.155
-		-Out of domain: 0.086
+		-In domain: 0.225
+		-Out of domain: 
+
+-Number Words
+	-Binary (2 classes)
+		-In domain: 0.554
+		-Out of domain: 0.553
+	-Family (5 classes)
+		-In domain: 0.242
+		-Out of domain: 0.223
+	-Language (36 classes)
+		-In domain: 0.030
+		-Out of domain: 0.059 
+
+-Punctuations
+	-Binary (2 classes)
+		-In domain: 0.642
+		-Out of domain: 0.588
+	-Family (5 classes)
+		-In domain: 0.323 
+		-Out of domain: 0.305
+	-Language (36 classes)
+		-In domain: 0.102
+		-Out of domain: 0.053
+
+-Edit Distance
+	-Binary (2 classes)
+		-In domain: 0.641
+		-Out of domain: 0.629
+	-Family (5 classes)
+		-In domain: 0.267
+		-Out of domain: 0.262
+	-Language (35 classes)
+		-In domain: 0.049
+		-Out of domain: 0.043 

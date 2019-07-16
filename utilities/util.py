@@ -127,7 +127,8 @@ FeatureToDirectory = {
     'bipos': '/pos_chunks.tar/pos_chunks-004/pos_chunks',
     'avgcapital': '/text_chunks.tar/text_chunks',
     'numberwords': '/text_chunks.tar/text_chunks',
-    'punctuations': '/text_chunks.tar/text_chunks'
+    'punctuations': '/text_chunks.tar/text_chunks',
+    'edit_distance': '/spell_checker_chunks.tar/spell_checker_chunks-005/spell_checker_chunks'
 }
 
 

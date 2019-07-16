@@ -10,7 +10,6 @@ from utilities.logger import log
 import utilities.util as util
 import utilities.interpreter as setup
 
-
 def generate(saving_path):
     log('Generating <' + setup.feature + ',' + setup.domain + '> user vectors')
 
@@ -53,6 +52,8 @@ def process_user(user_dir):
         return numberwords_process(user_dir)
     elif setup.feature == 'punctuations':
         return punctuations_process(user_dir)
+    elif setup.feature == 'edit_distance':
+        return edit_distance_process(user_dir)
 
 def punctuations_process(user_dir):
     user_vector = [0]*9
@@ -121,7 +122,6 @@ def numberwords_process(user_dir):
     # log('User vector for ' + user_name+' is:')
     # print(user_vector)
     return user_vector
-
 
 
 def avgcapital_process(user_dir):
@@ -398,7 +398,7 @@ def provide_function_words_map():
 
 def syncronized_functionwords_process(user_dir):
 
-    provide_courpus_functionwords(setup.numOfFunctionwords)
+    provide_corpus_functionwords(setup.numOfFunctionwords)
 
     user_vector = [0]*len(top_corpus_functionwords)
     indexed_top_corpus_functionwords={}
@@ -420,8 +420,8 @@ def syncronized_functionwords_process(user_dir):
 
     return user_vector
 
-def provide_courpus_functionwords(numOfFunctionwords):
 
+def provide_corpus_functionwords(numOfFunctionwords):
     global top_corpus_functionwords
     top_corpus_functionwords={}
 
@@ -458,7 +458,6 @@ def provide_courpus_functionwords(numOfFunctionwords):
     return top_corpus_functionwords
 
 
-
 def provide_bipos_map():
     top_bipos = provide_top_bipos()
 
@@ -466,6 +465,7 @@ def provide_bipos_map():
     bipos_map = {}  # saves mapping between tripos and vector index
     for index in range(300):
         bipos_map[heappop(top_bipos)] = index
+
 
 def bipos_process(user_dir):
     user_vector = [0] * 300
@@ -485,6 +485,7 @@ def bipos_process(user_dir):
 
     return user_vector
 
+
 def provide_top_bipos():
     bipos_file_path = Path("vectors_handling/vectors/bipos/top_bipos.txt")
 
@@ -494,6 +495,7 @@ def provide_top_bipos():
 
     top_bipos = util.load_file(bipos_file_path)
     return top_bipos
+
 
 def generate_top_bipos(save_path):
     log('Generating top bichars')
@@ -524,5 +526,30 @@ def generate_top_bipos(save_path):
 
     top_bipos = heapq.nlargest(300, all_bipos, key=all_bipos.get)  # fetch top 300 bipos
     util.save_file(save_path, top_bipos)
+
+
+def edit_distance_process(user_dir):
+
+    total_edit_distance = 0
+    word_count = 0
+
+    for file_dir in os.scandir(user_dir):  # Iterate files
+        file = open(file_dir, 'r', encoding='utf-8')
+
+        for line in file:  # Iterate lines
+            tokens = re.split("}, {",line)
+            for token in tokens:
+                word_count += 1
+                edit_dist_index = token.find("\"edit_dist\"")
+                if edit_dist_index != -1:
+                    if token[edit_dist_index+14] in (','):
+                        total_edit_distance += int(token[edit_dist_index+13])
+                    else:  # Edit distance is a 2 digit number
+                        total_edit_distance += int(token[edit_dist_index+13] + token[edit_dist_index+14])
+
+    average_edit_distance = []
+    average_edit_distance.append(total_edit_distance / word_count)
+    return average_edit_distance
+
 
 
