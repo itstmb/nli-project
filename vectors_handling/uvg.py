@@ -54,6 +54,8 @@ def process_user(user_dir):
         return punctuations_process(user_dir)
     elif setup.feature == 'edit_distance':
         return edit_distance_process(user_dir)
+    elif setup.feature == 'country_words':
+        return country_words_process(user_dir)
 
 def punctuations_process(user_dir):
     user_vector = [0]*9
@@ -553,3 +555,18 @@ def edit_distance_process(user_dir):
 
 
 
+def country_words_process(user_dir):
+
+    vector = [0]*35
+
+    for file_dir in os.scandir(user_dir):
+        file = open(file_dir, 'r', encoding='utf-8')
+        lines = file.readlines()
+
+        for line in lines:
+            words = line.split()
+            for word in words:
+                if word in util.CountryWords:
+                    vector[util.CountryWords.get(word)] += 1
+
+    return vector

@@ -10,7 +10,8 @@ possible_inputs = {
         'avgcapital',
         'numberwords',
         'punctuations',
-        'edit_distance'],
+        'edit_distance',
+        'country_words'],
     1: ['binary','family', 'language'],
     2: ['in', 'out'],
     3: [x for x in range(-1, 17)]
