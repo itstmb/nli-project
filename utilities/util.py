@@ -124,6 +124,8 @@ FeatureToDirectory = {
     'unigrams' : '/text_chunks.tar/text_chunks',
     'functionwords' : '/text_chunks.tar/text_chunks',
     'synchronized_functionwords' : '/text_chunks.tar/text_chunks',
+    'avg_word': '/text_chunks.tar/text_chunks',
+    'english': '/text_chunks.tar/text_chunks',
     'bipos': '/pos_chunks.tar/pos_chunks-004/pos_chunks',
     'avgcapital': '/text_chunks.tar/text_chunks',
     'numberwords': '/text_chunks.tar/text_chunks',

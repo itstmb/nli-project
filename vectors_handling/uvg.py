@@ -59,6 +59,10 @@ def process_user(user_dir):
         return spelling_errors_process(user_dir)
     elif setup.feature == 'country_words':
         return country_words_process(user_dir)
+    elif setup.feature == 'avg_word':
+        return average_word_process(user_dir)
+    elif setup.feature == 'english':
+        return average_english(user_dir)
 
 def punctuations_process(user_dir):
     user_vector = [0]*9
@@ -85,8 +89,6 @@ def punctuations_process(user_dir):
     # log('User vector for ' + user_name+' is:')
     # print(user_vector)
     return user_vector
-
-
 
 
 def numberwords_process(user_dir):
@@ -672,3 +674,36 @@ def country_words_process(user_dir):
                     vector[util.CountryWords.get(word)] += 1
 
     return vector
+
+
+def average_word_process(user_dir):
+    user_chars = 0
+    user_words = 0
+    for file_dir in os.scandir(user_dir):
+        file = open(file_dir, 'r', encoding='utf-8')
+        lines = file.readlines()
+        for line in lines:
+            words = re.split(" ",line)
+            user_words += len(words)
+            for word in words:
+                user_chars += len(word)
+
+    average_word_length = [user_chars/user_words]
+    return average_word_length
+
+
+def average_english(user_dir):
+    user_words = 0
+    english_words = 0
+    for file_dir in os.scandir(user_dir):
+        file = open(file_dir, 'r', encoding='utf-8')
+        lines = file.readlines()
+        for line in lines:
+            words = re.split(" ",line)
+            user_words += len(words)
+            for word in words:
+                if word == 'english':
+                    english_words += 1
+
+    average_english_word = [english_words/user_words]
+    return average_english_word

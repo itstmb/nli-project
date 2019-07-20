@@ -68,6 +68,28 @@
 Additional Features
 =============
 
+-AVG Word length
+	-Binary (2 classes)
+		-In domain: 0.532
+		-Out of domain:  0.554
+	-Family (5 classes)
+		-In domain: 0.228
+		-Out of domain: 0.237
+	-Language (35 classes)
+		-In domain: 0.059
+		-Out of domain: 0.076
+
+-AVG English word
+	-Binary (2 classes)
+		-In domain: 0.510
+		-Out of domain: 0.492
+	-Family (5 classes)
+		-In domain: 0.233
+		-Out of domain: 0.195
+	-Language (35 classes)
+		-In domain: 0.039
+		-Out of domain: 0.039
+
 -POS bigrams
 	-Binary (2 classes)
 		-In domain: 0.764
@@ -133,3 +155,15 @@ Additional Features
 	-Language (35 classes)
 		-In domain: 
 		-Out of domain: 
+
+
+-Average word length
+	-Binary (2 classes)
+		-In domain: 0.863
+		-Out of domain: 0.811
+	-Family (5 classes)
+		-In domain: 0.851
+		-Out of domain: 0.785
+	-Language (35 classes)
+		-In domain: 0.828
+		-Out of domain: 0.725

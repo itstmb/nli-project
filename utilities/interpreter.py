@@ -6,6 +6,8 @@ possible_inputs = {
         'unigrams',
         'functionwords',
         'synchronized_functionwords',
+        'avg_word',
+        'english',
         'bipos',
         'avgcapital',
         'numberwords',
