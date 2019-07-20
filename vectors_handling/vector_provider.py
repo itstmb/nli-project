@@ -55,6 +55,8 @@ def provide_user_vector():
         elif setup.feature == 'synchronized_functionwords':
             uvg.provide_function_words_map()
             uvg.provide_corpus_functionwords(setup.numOfFunctionwords)
+        elif setup.feature == 'spelling_errors':
+            uvg.provide_spelling_map()
 
 
         uvg.generate(user_file_path)

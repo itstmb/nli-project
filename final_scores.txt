@@ -1,0 +1,135 @@
+-Unigrams
+	-Binary (2 classes)
+		-In domain: 0.719
+		-Out of domain: 0.678
+	-Family (5 classes)
+		-In domain: 0.503
+		-Out of domain: 0.431
+	-Language (35 classes)
+		-In domain: 0.183
+		-Out of domain: 0.112
+
+-Function Words (400)
+	-Binary (2 classes)
+		-In domain: 0.770
+		-Out of domain:  0.760
+	-Family (5 classes)
+		-In domain: 0.553
+		-Out of domain: 0.538
+	-Language (35 classes)
+		-In domain: 0.174
+		-Out of domain: 0.149
+
+-POS trigrams - Tripos
+	-Binary (2 classes)
+		-In domain: 0.729
+		-Out of domain: 0.758
+	-Family (5 classes)
+		-In domain: 0.463
+		-Out of domain: 0.494
+	-Language (35 classes)
+		-In domain: 0.153
+		-Out of domain: 0.152
+
+-Character trigrams - Trichar
+	-Binary (2 classes)
+		-In domain: 0.871
+		-Out of domain: 0.806
+	-Family (5 classes)
+		-In domain:  0.798
+		-Out of domain: 0.629
+	-Language (35 classes)
+		-In domain: 0.740
+		-Out of domain: 0.447
+
+-Edit Distance
+	-Binary (2 classes)
+		-In domain: 0.638
+		-Out of domain: 0.632
+	-Family (5 classes)
+		-In domain: 0.276
+		-Out of domain: 0.260
+	-Language (35 classes)
+		-In domain: 0.049
+		-Out of domain: 0.042
+
+-Spelling Errors
+	-Binary (2 classes)
+		-In domain: 0.785
+		-Out of domain: 0.714
+	-Family (5 classes)
+		-In domain: 0.602
+		-Out of domain: 0.456
+	-Language (35 classes)
+		-In domain: 0.395
+		-Out of domain: 0.225
+
+=============
+Additional Features
+=============
+
+-POS bigrams
+	-Binary (2 classes)
+		-In domain: 0.764
+		-Out of domain: 0.761
+	-Family (5 classes)
+		-In domain: 0.517
+		-Out of domain: 0.531
+	-Language (35 classes)
+		-In domain: 0.168
+		-Out of domain: 0.168
+
+-Number words
+	-Binary (2 classes)
+		-In domain: 0.552
+		-Out of domain: 0.552
+	-Family (5 classes)
+		-In domain: 0.238
+		-Out of domain: 0.226
+	-Language (35 classes)
+		-In domain: 0.043
+		-Out of domain: 0.041
+
+-Punctuations
+	-Binary (2 classes)
+		-In domain: 0.648
+		-Out of domain: 0.609
+	-Family (5 classes)
+		-In domain: 0.319
+		-Out of domain: 0.308
+	-Language (35 classes)
+		-In domain: 0.103
+		-Out of domain: 0.092
+
+-Country Words
+	-Binary (2 classes)
+		-In domain: 0.863
+		-Out of domain: 0.811
+	-Family (5 classes)
+		-In domain: 0.851
+		-Out of domain: 0.785
+	-Language (35 classes)
+		-In domain: 0.828
+		-Out of domain: 0.725
+
+-AVG Capital Letters
+	-Binary (2 classes)
+		-In domain:
+		-Out of domain: 
+	-Family (5 classes)
+		-In domain: 
+		-Out of domain: 
+	-Language (35 classes)
+		-In domain: 
+		-Out of domain: 
+
+-Starting Capital Letters
+	-Binary (2 classes)
+		-In domain:
+		-Out of domain: 
+	-Family (5 classes)
+		-In domain: 
+		-Out of domain: 
+	-Language (35 classes)
+		-In domain: 
+		-Out of domain: 

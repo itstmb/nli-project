@@ -1,6 +1,7 @@
 import os
 import re
 import heapq
+import json
 
 from heapq import heappop
 
@@ -54,6 +55,8 @@ def process_user(user_dir):
         return punctuations_process(user_dir)
     elif setup.feature == 'edit_distance':
         return edit_distance_process(user_dir)
+    elif setup.feature == 'spelling_errors':
+        return spelling_errors_process(user_dir)
     elif setup.feature == 'country_words':
         return country_words_process(user_dir)
 
@@ -552,6 +555,105 @@ def edit_distance_process(user_dir):
     average_edit_distance = []
     average_edit_distance.append(total_edit_distance / word_count)
     return average_edit_distance
+
+def provide_spelling_map():
+    top_spelling = provide_top_spelling_errors()
+
+    global spelling_errors_map
+    spelling_errors_map = {}
+
+    for index in range(400):
+        spelling_errors_map[heappop(top_spelling)] = index
+
+
+def provide_top_spelling_errors():
+    spelling_file_path = Path("vectors_handling/vectors/spelling_errors/top_spelling_errors.txt")
+
+    if not util.exists(spelling_file_path):  # can't find the file in memory
+        log('Cannot find top bipos file')  # redundant
+        generate_top_spelling_errors(spelling_file_path)
+
+    top_spelling_errors = util.load_file(spelling_file_path)
+    return top_spelling_errors
+
+
+def generate_top_spelling_errors(save_path):
+    log('Generating top spelling errors')
+    all_spelling_errors = {}
+
+    for domain_dir in os.scandir(setup.database):
+        if domain_dir.name == 'europe_data' and setup.domain == 'in':
+
+            for country_dir in os.scandir(domain_dir):
+                country_name = str.split(os.path.basename(country_dir), '.')[1]
+                log('Generating top spelling errors for ' + country_name)
+                for user_dir in os.scandir(country_dir):
+                    errors = []
+                    for file_dir in os.scandir(user_dir):
+                        file = open(file_dir, "r", encoding="utf-8")
+                        lines = file.readlines()
+
+                        for line in lines:  # parse lines within chunk text
+                            json_data = json.loads(line)
+                            for json_token in json_data:
+                                if 'deletions' in json_token:
+                                    if '[]' not in str(json_token['deletions']):  # not empty
+                                        for component in json_token['deletions']:
+                                            errors.append("del: " + component)
+
+                                if 'insertions' in json_token:
+                                    if '[]' not in str(json_token['insertions']):  # not empty
+                                        for component in json_token['insertions']:
+                                            errors.append("ins: " + component)
+
+                                if 'replacements' in json_token:
+                                    if '[]' not in str(json_token['replacements']):  # not empty
+                                        for component in json_token['replacements']:
+                                            errors.append("rep: " + str(component))
+
+                    for error in errors:
+                        if error not in all_spelling_errors.keys():
+                            all_spelling_errors[error] = 1
+                        else:
+                            all_spelling_errors[error] += 1
+    top_spelling_errors = heapq.nlargest(400, all_spelling_errors, key=all_spelling_errors.get)  # fetch top 400 spelling errors
+    util.save_file(save_path, top_spelling_errors)
+
+
+def spelling_errors_process(user_dir):
+    user_vector = [0] * 400
+
+    for file_dir in os.scandir(user_dir):
+        file = open(file_dir, "r", encoding="utf-8")
+        lines = file.readlines()
+
+        for line in lines:  # parse lines within chunk text
+            json_data = json.loads(line)
+            for json_token in json_data:
+                if 'deletions' in json_token:
+                    if '[]' not in str(json_token['deletions']):  # not empty
+                        for component in json_token['deletions']:
+                            token = ("del: " + component)
+                            if token in spelling_errors_map:
+                                user_vector[spelling_errors_map[token]] += 1
+
+
+                if 'insertions' in json_token:
+                    if '[]' not in str(json_token['insertions']):  # not empty
+                        for component in json_token['insertions']:
+                            token = ("ins: " + component)
+                            if token in spelling_errors_map:
+                                user_vector[spelling_errors_map[token]] += 1
+
+                if 'replacements' in json_token:
+                    if '[]' not in str(json_token['replacements']):  # not empty
+                        for component in json_token['replacements']:
+                            token = ("rep: " + str(component))
+                            if token in spelling_errors_map:
+                                user_vector[spelling_errors_map[token]] += 1
+
+    return user_vector
+
 
 
 

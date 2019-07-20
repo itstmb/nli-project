@@ -129,6 +129,7 @@ FeatureToDirectory = {
     'numberwords': '/text_chunks.tar/text_chunks',
     'punctuations': '/text_chunks.tar/text_chunks',
     'edit_distance': '/spell_checker_chunks.tar/spell_checker_chunks-005/spell_checker_chunks',
+    'spelling_errors': '/spell_checker_chunks.tar/spell_checker_chunks-005/spell_checker_chunks',
     'country_words': '/text_chunks.tar/text_chunks'
 }
 

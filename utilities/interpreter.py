@@ -11,6 +11,7 @@ possible_inputs = {
         'numberwords',
         'punctuations',
         'edit_distance',
+        'spelling_errors',
         'country_words'],
     1: ['binary','family', 'language'],
     2: ['in', 'out'],
