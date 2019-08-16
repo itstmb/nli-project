@@ -174,7 +174,3 @@ class gui_interface():
         global app
         app = window(root)
         app.mainloop()
-
-def gui_log(self, text):
-    window.gui_log(text)
-
