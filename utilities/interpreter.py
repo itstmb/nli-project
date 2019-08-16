@@ -1,5 +1,6 @@
 import utilities.util as util
 
+
 possible_inputs = {
     0: ['trichar',
         'pos',
@@ -30,7 +31,6 @@ threads: [-1 - 16]
 
 def get_params():
     global feature, type, domain, threads, iterations, numOfFunctionwords
-
     feature = input('Feature? ' + str(possible_inputs[0]) + ' : ')
     if feature == 'synchronized_functionwords':
         numOfFunctionwords= int(input('numOfFunctionwords?: '))
@@ -42,6 +42,18 @@ def get_params():
     for index, x in enumerate([feature, type, domain, threads]):
         if x not in possible_inputs[index]:
             raise IOError("Bad input! '{}' not in {}".format(x, possible_inputs[index]))
+
+    get_database()
+
+def set_params(gui_feature, gui_type, gui_domain, gui_threads, gui_iterations, gui_numOfFunctionWords = 0):
+    global feature, type, domain, threads, iterations, numOfFunctionwords
+    feature = gui_feature
+    type = gui_type
+    domain = gui_domain
+    threads = gui_threads
+    iterations = gui_iterations
+    if feature == 'synchronized_functionwords':
+        numOfFunctionwords = gui_numOfFunctionWords
 
     get_database()
 

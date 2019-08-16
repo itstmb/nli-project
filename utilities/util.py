@@ -7,6 +7,8 @@ import utilities.interpreter as setup
 
 from ast import literal_eval
 
+import multiprocessing
+
 class Language(object):
     def __init__(self, native, family, name):
         self.native = native
@@ -355,4 +357,5 @@ def load_users(path):
 
     return in_users
 
-
+def get_cpu_count():
+    return multiprocessing.cpu_count()
