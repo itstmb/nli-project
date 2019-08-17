@@ -45,6 +45,8 @@ If you don't have any file that the algorithm requires in order to provide the v
 python run.py
 ```
 
+We've made a simple GUI interface for an intuitive user experience.
+
 Parameters:
 Feature - The feature to use in the classification process.
 
