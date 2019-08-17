@@ -47,6 +47,8 @@ python run.py
 
 We've made a simple GUI interface for an intuitive user experience.
 
+![GUI Interface](https://i.imgur.com/5nm64Gj.png)
+
 Parameters:
 Feature - The feature to use in the classification process.
 
