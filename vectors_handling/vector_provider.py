@@ -10,7 +10,10 @@ import vectors_handling.cvg as cvg
 
 
 def provide_vectors():
-    user_vector = provide_user_vector()
+    if setup.feature2 is None:
+        user_vector = provide_user_vector()
+    else:
+        user_vector = stack_user_vectors()
     country_vector = provide_country_vector()
     user_vector, country_vector = downsampler(user_vector, country_vector)
     return user_vector, country_vector
@@ -64,6 +67,17 @@ def provide_user_vector():
     log('Loading user vectors from file')
     user_vector = util.load_users(user_file_path)
     return user_vector
+
+
+def stack_user_vectors():
+    log('Vector stacking initiated')
+    vector1 = provide_user_vector()
+    setup.feature, setup.feature2 = setup.feature2, setup.feature  # switch
+    vector2 = provide_user_vector()
+    setup.feature, setup.feature2 = setup.feature2, setup.feature  # switch back (for consistency)
+
+    joined_vector = [user_vector1 + user_vector2 for user_vector1, user_vector2 in zip(vector1, vector2)]
+    return joined_vector
 
 
 def provide_country_vector():

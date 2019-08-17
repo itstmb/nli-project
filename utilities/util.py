@@ -320,12 +320,14 @@ def save_file(path, data_list):
 def write_scores(score):
     score_info = '[{}]:\n' \
                  'feature: {}\n' \
+                 'feature 2: {}\n' \
                  'type: {}\n' \
                  'domain: {}\n' \
                  'threads: {}\n' \
                  'max iterations: {}\n' \
                  'score: {}'.format(get_time(),
                                     setup.feature,
+                                    setup.feature2,
                                     setup.type,
                                     setup.domain,
                                     setup.threads,

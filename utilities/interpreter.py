@@ -2,7 +2,8 @@ import utilities.util as util
 
 
 possible_inputs = {
-    0: ['trichar',
+    0: ['None',
+        'trichar',
         'pos',
         'unigrams',
         'functionwords',
@@ -31,9 +32,10 @@ threads: [-1 - 16]
 
 def get_params():
     global feature, type, domain, threads, iterations, numOfFunctionwords
-    feature = input('Feature? ' + str(possible_inputs[0]) + ' : ')
+    feature = input('Feature? ' + str(possible_inputs[0][1:]) + ' : ')
     if feature == 'synchronized_functionwords':
         numOfFunctionwords= int(input('numOfFunctionwords?: '))
+    feature2 = input('Feature 2? ' + str(possible_inputs[0]) + ' : ')
     type = input('Classification type? ' + str(possible_inputs[1]) + ' : ')
     domain = input('Domain? ' + str(possible_inputs[2]) + ' : ')
     threads = int(input('Number of threads? [-1 - 16] : '))
@@ -45,15 +47,17 @@ def get_params():
 
     get_database()
 
-def set_params(gui_feature, gui_type, gui_domain, gui_threads, gui_iterations, gui_numOfFunctionWords = 0):
-    global feature, type, domain, threads, iterations, numOfFunctionwords
-    feature = gui_feature
-    type = gui_type
-    domain = gui_domain
-    threads = gui_threads
-    iterations = gui_iterations
+
+def set_params(var_feature, var_feature2, var_type, var_domain, var_threads, var_iterations, var_numOfFunctionWords = 0):
+    global feature, feature2, type, domain, threads, iterations, numOfFunctionwords
+    feature = var_feature
+    feature2 = var_feature2
+    type = var_type
+    domain = var_domain
+    threads = var_threads
+    iterations = var_iterations
     if feature == 'synchronized_functionwords':
-        numOfFunctionwords = gui_numOfFunctionWords
+        numOfFunctionwords = var_numOfFunctionWords
 
     get_database()
 

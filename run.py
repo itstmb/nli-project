@@ -9,7 +9,7 @@ import outdomain_classifier'''
 
 
 if __name__ == '__main__':
-    gui.gui_interface()
+    gui.GuiInterface()
 
     '''
     log('Starting NLI with user generated content')
